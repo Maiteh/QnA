@@ -1,6 +1,8 @@
 var gulp       = require('gulp');
 var browserSync = require('browser-sync').create();
 var cleanCSS = require('gulp-clean-css');
+var concatCSS = require('gulp-concat-css');
+var nodemon = require('gulp-nodemon');
 
 // Minify css for preformance
 gulp.task('minify-css', function() {
@@ -17,12 +19,24 @@ gulp.task('browser-sync', function() {
     browserSync.init({
         //injectChanges: true,
         host: 'localhost',
-        proxy: 'localhost:3700/'
+        proxy: 'localhost:3700'
     });
     // Call function gulp watch to check if changes
     // if changes -> reload !!
     gulp.watch("assets/css/*.css", ['minify-css']).on('change', browserSync.reload);
 });
+
+// starting the app with nodemon
+gulp.task('start', function () {
+    nodemon({
+        script: 'index.js'
+        , ext: 'js jade'
+        , tasks: ['browser-sync']})
+        .on('restart', function () {
+            console.log('restarted!')
+        })
+});
+
 
 gulp.task('watch', function () {
     gulp.watch('assets/css/*.css' ['minify-css']);
@@ -30,4 +44,4 @@ gulp.task('watch', function () {
 
 
 // When just running 'gulp' he wil automatically run these tasks.
-gulp.task('default', ['minify-css', 'browser-sync', 'watch']);
+gulp.task('default', ['start', 'minify-css', 'browser-sync', 'watch']);
