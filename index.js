@@ -44,4 +44,6 @@ io.sockets.on('connection', function (socket) {
   socket.emit('message', messages);
   //broadcast to all clients
   io.sockets.in(room_id).emit('message', message);
+  // To handle multiple users we'll need a login system
+  socket.emit('regist', { username: username, password: password });
 });
