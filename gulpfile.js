@@ -5,6 +5,9 @@ var cleanCSS = require('gulp-clean-css');
 // Minify css for preformance
 gulp.task('minify-css', function() {
     return gulp.src('assets/css/*.css')
+    // Merge all the css files to one file.
+        .pipe(concatCSS('styles/bundle.css'))
+        // Minify css
         .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(gulp.dest('assets/styles'));
 });
@@ -24,3 +27,7 @@ gulp.task('browser-sync', function() {
 gulp.task('watch', function () {
     gulp.watch('assets/css/*.css' ['minify-css']);
 });
+
+
+// When just running 'gulp' he wil automatically run these tasks.
+gulp.task('default', ['minify-css', 'browser-sync', 'watch']);
