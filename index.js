@@ -1,22 +1,21 @@
 var express = require("express");
 var http = require('http');
 var app = express();
-var server = http.createServer(app);
-// choose a port
-var port = 3700;
 //Mongo connection to save the messages
 var mongoose = require('mongoose');
 var url = 'mongodb://localhost:27017/q-a';
 var Schema = mongoose.Schema;
 var connection = mongoose.createConnection(url);
 
+var server = app.listen(3000, function() {
+    //adress = localhost, port = 3000
+    console.log('Express server listening on port ' + server.address().port);
+});
 //get root or just localhost:3700/
 app.get("/", function(req, res){
-  res.send('Connection etablished!');
+    res.send('It works! look at me now :D');
 });
-//Tell the server to which port to listen
-server.listen(port);
-console.log('Server started on port ' + port);
+
 // declare where you define your views
 app.set('views', __dirname + '/views');
 //what view engine, ejs or jade
@@ -24,7 +23,7 @@ app.set('view engine', "jade");
 app.engine('jade', require('jade').__express);
 
 app.get("/", function(req, res){
-  res.render("index");
+    res.render("index");
 });
 
 /**
@@ -40,10 +39,58 @@ var io = require('socket.io').listen(server);
 
 io.sockets.on('connection', function (socket) {
 
-  //This will only send event to socket client
-  socket.emit('message', messages);
-  //broadcast to all clients
-  io.sockets.in(room_id).emit('message', message);
-  // To handle multiple users we'll need a login system
-  socket.emit('regist', { username: username, password: password });
+    //This will only send event to socket client
+    socket.emit('message', messages);
+    //broadcast to all clients
+    io.sockets.in(room_id).emit('message', message);
+    // To handle multiple users we'll need a login system
+    socket.emit('regist', { username: username, password: password });
+});
+/**
+ * Trigger message event
+ * _clientUserId id of user on server database
+ * _clientId id of current user socket
+ * data hold message data
+ */
+socket.on('message', function (_clientUserId, _clientId, data) {
+  console.log('Message on room ' + data.room_id);
+  var room_id = data.room_id;
+
+  var tempRoom = room_id.split('_');
+  var tempRoomId = tempRoom.length == 2 ? tempRoom[1] + '_' + tempRoom[0] : '';
+
+  if(data.message) {
+    var cls = 'row';
+    // Handle on destination client
+    if (_clientId != clientId) {
+      cls = 'row_other';
+      notifyMe(data);
+
+      // If not is MAIN_ROOM, show unread count message
+      if (room_id == MAIN_ROOM) {
+        if (currRoomId != MAIN_ROOM) {
+          var currUnread = $('#user-list li#main_room .unread').text();
+          currUnread++;
+          $('#user-list li#main_room .unread').text(currUnread).show();
+        }
+      } else if (currRoomId != room_id && currRoomId != tempRoomId) {
+        // Show unread count message on private chat
+        var currUnread = $('#user-list li[data-rid=' + _clientUserId + '] .unread').text();
+        currUnread++;
+        $('#user-list li[data-rid=' + _clientUserId + '] .unread').text(currUnread).show();
+      }
+    }
+    if (currRoomId == room_id || tempRoomId == currRoomId) {
+      // Show message on screen
+      var date = new Date();
+      var html = '<div class="' + cls + '">' +
+        '<div class="r-message"><div class="username">' + data.username + '</div><div class="message">' + data.message + '</div>' +
+        '<div class="profile"><img src="/images/profile.jpg" class="img-rounded"></div></div>' +
+        '<div class="date">' + date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2) + '</div>' +
+        '</div>';
+        $('#' + MAIN_ROOM).append(html).scrollTop($('#' + MAIN_ROOM)[0].scrollHeight);
+    }
+  } else {
+    console.log("There is a problem:", data);
+  }
 });

@@ -10,8 +10,11 @@
   },
   "devDependencies": {
     "browser-sync": "^2.12.5",
+    "express": "^4.13.4",
     "gulp": "^3.9.1",
     "gulp-concat-css": "^2.2.0",
-    "gulp-nodemon": "^2.0.6"
+    "gulp-livereload": "^3.8.1",
+    "gulp-nodemon": "^2.0.6",
+    "gulp-notify": "^2.2.0"
   }
 }
