@@ -3,11 +3,13 @@ var http = require('http');
 var app = express();
 var assert = require("assert");
 var favicon = require('serve-favicon');
+var autoIncrement = require('mongoose-auto-increment');
 //Mongo connection to save the messages
 var mongoose = require('mongoose');
 var url = 'mongodb://localhost:27017/q-a';
 var Schema = mongoose.Schema;
 var connection = mongoose.createConnection(url);
+autoIncrement.initialize(connection);
 
 var server = app.listen(3000, function() {
     //adress = localhost, port = 3000
