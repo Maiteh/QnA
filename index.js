@@ -11,6 +11,15 @@ var Schema = mongoose.Schema;
 var connection = mongoose.createConnection(url);
 autoIncrement.initialize(connection);
 
+// Defining Schema model for mongo db. For the users.
+var userSchema = new Schema({
+    user_id: Number,
+    username: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    created_at: Date,
+    updated_at: Date
+});
+
 var server = app.listen(3000, function() {
     //adress = localhost, port = 3000
     console.log('Express server listening on port ' + server.address().port);
