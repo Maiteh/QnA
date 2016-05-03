@@ -41,6 +41,35 @@ var messageSchema = new Schema({
     message: String,
     created_at: Date
 });
+// Add the date before any save
+messageSchema.pre('save', function(next) {
+    // get the current date
+    var currentDate = new Date();
+
+    // change the updated_at field to current date
+    this.updated_at = currentDate;
+
+    // if created_at doesn't exist, add to that field
+    if (!this.created_at)
+        this.created_at = currentDate;
+
+    next();
+});
+
+// Create User and Message schema
+userSchema.plugin(autoIncrement.plugin, {
+    model: 'User',
+    field: 'user_id',
+    startAt: 1,
+    incrementBy: 1
+});
+messageSchema.plugin(autoIncrement.plugin, {
+    model: 'Message',
+    field: 'message_id',
+    startAt: 1,
+    incrementBy: 1
+});
+
 
 var server = app.listen(3000, function() {
     //adress = localhost, port = 3000
