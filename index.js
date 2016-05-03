@@ -57,6 +57,7 @@ messageSchema.pre('save', function(next) {
 });
 
 // Create User and Message schema
+// This is where we will use the autoincrement.
 userSchema.plugin(autoIncrement.plugin, {
     model: 'User',
     field: 'user_id',
@@ -69,7 +70,18 @@ messageSchema.plugin(autoIncrement.plugin, {
     startAt: 1,
     incrementBy: 1
 });
+// Create User and Message schema
+var User = connection.model('User', userSchema);
+var Message = connection.model('Message', messageSchema);
 
+var app = express();
+var http = require('http');
+var server = http.createServer(app);
+var port = 3000;
+var users = [];
+var userSockets = [];
+var rooms = [];
+var mainRoom = 'Webtech 2';
 
 var server = app.listen(3000, function() {
     //adress = localhost, port = 3000
