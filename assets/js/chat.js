@@ -268,4 +268,87 @@ $(window).load(function() {
     }
   });
 
-  
+  /**
+  * User interaction. Active private chat for user clicked
+  */
+  $('#user').on('click', '.row-user', function () {
+    // Hide unread notify
+    $(this).find('.unread').text('').hide();
+
+    var roomId = $(this).attr('data-rid');
+    var _clientId = $(this).attr('id'); // Client ID of the socket connected
+    var roomTitle = $(this).find('.user_name').text();
+    $('.room-title').text(roomTitle);
+
+    $('#user-list li').removeClass('active');
+
+    $('#user-list li[data-rid=' + roomId + ']').addClass('active');
+
+    var activeRoom = _userId + '_' + roomId;
+    if ($('#' + activeRoom).length == 0) {
+        // Change room for private chat
+        socket.emit('subscribe', _userId, _clientId, roomId);
+    } else {
+      // Only active current private chat
+      currRoomId = activeRoom;
+
+      // Load messages for this room
+      socket.emit('load_message', _clientId, currRoomId);
+      $('#active_room').text(currRoomId);
+    }
+
+    $('#message').focus();
+  });
+
+  // User click Send button
+  $('#send').click(function() {
+    var text = field.val().trim();
+
+    if (text !== '') {
+      socket.emit('send', { message: text, username: _username, room_id: currRoomId });
+
+      field.val('').focus();
+    }
+  });
+
+  // Catch when user press Enter on keyboard
+  $('#message').keypress(function(e) {
+    var text = field.val().trim();
+
+    if (e.which == 13 && text !== '') {
+      socket.emit('send', { message: text, username: _username, room_id: currRoomId });
+
+      console.log('Send message in room ' + currRoomId);
+
+      $(this).val('').focus();
+    }
+  });
+});
+
+// Show desktop notification
+$(function() {
+  // request permission on page load
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+
+function notifyMe(data) {
+  if (!Notification) {
+    alert('Desktop notifications not available in your browser. Try Chromium.');
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification('New message', {
+      icon: SERVER + '/images/so_icon.png',
+      body: data.message,
+    });
+
+    // Open and active current chat window
+    notification.onclick = function () {
+      chatWindow.focus();
+    };
+  }
+}
