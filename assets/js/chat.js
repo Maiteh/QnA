@@ -1,7 +1,3 @@
-/**
-* TODO: Stream simple music between clients
-*/
-
 // SERVER address and port
 var SERVER = 'http://localhost:3000';
 
@@ -10,10 +6,10 @@ var MAIN_ROOM = 'Intro Q&A';
 // Chat window is current window
 var chatWindow = window.self;
 
-$(window).load(function() {
+$(window).load(function () {
 
   // Add regular expression to check username valid
-  $.validator.addMethod("regex", function(value, element, regexpr) {          
+  $.validator.addMethod("regex", function (value, element, regexpr) {
     return regexpr.test(value);
   }, "Please enter a valid username.");
 
