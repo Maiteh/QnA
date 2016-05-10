@@ -18,9 +18,9 @@ var userSchema = new Schema({
     password: { type: String, required: true },
     created_at: Date,
     updated_at: Date
-})
+});
 // Add the date before any save
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function (next) {
     // get the current date
     var currentDate = new Date();
 
@@ -83,15 +83,6 @@ var userSockets = [];
 var rooms = [];
 var mainRoom = 'Webtech 2';
 
-var server = app.listen(3000, function() {
-    //adress = localhost, port = 3000
-    console.log('Express server listening on port ' + server.address().port);
-});
-//get root or just localhost:3700/
-app.get("/", function(req, res){
-    res.send('It works! look at me now :D');
-});
-
 // declare where you define your views
 app.set('views', __dirname + '/views');
 //what view engine, ejs or jade
@@ -102,25 +93,39 @@ app.get("/", function(req, res){
     res.render("index");
 });
 
-/**
- * Pass express to socket.io
- * This is where were alle the code belongs
- * This method will handle all connection from all clients connected to our server.
- * The object socket is actually socket of the client.
- * This is the way client connect and send event to our server.
- * To send message to client we only need to do this
- * @type {http.Server}
- */
+// Require public folder resources
+app.use(express.static(__dirname + '/assets'));
+app.use(favicon(__dirname + '/assets/favicon.ico'));
+
+// Pass express to socket.io
 var io = require('socket.io').listen(server);
 
+// Initiate socket to handle all connection
 io.sockets.on('connection', function (socket) {
+	var _clientId = socket.id;
 
-    //This will only send event to socket client
-    socket.emit('message', messages);
-    //broadcast to all clients
-    io.sockets.in(room_id).emit('message', message);
-    // To handle multiple users we'll need a login system
-    socket.emit('regist', { username: username, password: password });
+  socket.join(mainRoom);
+
+  if (rooms.indexOf(mainRoom) == -1) {
+    rooms.push(mainRoom);
+  }
+
+  // Load message for rooms
+  socket.on('load_message', function (_clientId, roomId) {
+    console.log('Loading message for room ' + roomId);
+    var rooms = roomId.split('_');
+    if (rooms.length == 2) {
+      var room2 = rooms[1] + '_' + rooms[0];
+      console.log('Load from ' + roomId + ' - ' + room2);
+      Message.find().or([{ room_id: roomId }, { room_id: room2}]).sort({'created_at': 'asc'}).exec(function (err, messages) {
+        socket.emit('display_message', _clientId, messages);
+      });
+    } else {
+      Message.find({ room_id: roomId }).sort({'created_at': 'asc'}).exec(function (err, messages) {
+        socket.emit('display_message', _clientId, messages);
+      });
+    }
+  });
 
     /**
      * Trigger message event
@@ -131,94 +136,110 @@ io.sockets.on('connection', function (socket) {
      * handle connection from server and show message on screen.
      * will make sure own messega's are on the right other on the left.
      */
-    socket.on('message', function (_clientUserId, _clientId, data) {
-        console.log('Message on room ' + data.room_id);
-        var room_id = data.room_id;
-
-        var tempRoom = room_id.split('_');
-        var tempRoomId = tempRoom.length == 2 ? tempRoom[1] + '_' + tempRoom[0] : '';
-
-        if(data.message) {
-            var cls = 'row';
-            // Handle on destination client
-            if (_clientId != clientId) {
-                cls = 'row_other';
-                notifyMe(data);
-
-                // If not is MAIN_ROOM, show unread count message
-                if (room_id == MAIN_ROOM) {
-                    if (currRoomId != MAIN_ROOM) {
-                        var currUnread = $('#user-list li#main_room .unread').text();
-                        currUnread++;
-                        $('#user-list li#main_room .unread').text(currUnread).show();
-                    }
-                } else if (currRoomId != room_id && currRoomId != tempRoomId) {
-                    // Show unread count message on private chat
-                    var currUnread = $('#user-list li[data-rid=' + _clientUserId + '] .unread').text();
-                    currUnread++;
-                    $('#user-list li[data-rid=' + _clientUserId + '] .unread').text(currUnread).show();
-                }
-            }
-            if (currRoomId == room_id || tempRoomId == currRoomId) {
-                // Show message on screen
-                var date = new Date();
-                var html = '<div class="' + cls + '">' +
-                    '<div class="r-message"><div class="username">' + data.username + '</div><div class="message">' + data.message + '</div>' +
-                    '<div class="profile"><img src="/images/profile.jpg" class="img-rounded"></div></div>' +
-                    '<div class="date">' + date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2) + '</div>' +
-                    '</div>';
-                $('#' + MAIN_ROOM).append(html).scrollTop($('#' + MAIN_ROOM)[0].scrollHeight);
-            }
-        } else {
-            console.log("There is a problem:", data);
-        }
+  socket.on('send', function (data) {
+    var _clientUser = functions.findByKey(users, 'client_id', _clientId);
+    var _clientUserId = _clientUser.user_id;
+    
+    var message = new Message({
+      user_id: _clientUserId,
+      user_name: data.username,
+      room_id: data.room_id,
+      message: data.message
+    });
+    message.save(function (err) {
+      if (err != null) {
+        console.log('There is an error saving data ' + err);
+      }
     });
 
-    //private chat
-    socket.emit('subscribe', _userId, _clientId, roomId);
-    socket.on('subscribe', function (_clientUserId, clientId, room_id) {
-        if (room_id != mainRoom) {
-            room_id = room_id + '_' + _clientUserId;
+    io.sockets.in(data.room_id).emit('message', _clientUserId, _clientId, data);
+  });
 
-            if (rooms.indexOf(room_id) == -1) {
-                // Create private chat between this socket and client
-                socket.join(room_id);
-                userSockets[clientId].join(room_id);
+  socket.on('subscribe', function (_clientUserId, clientId, room_id) {
+    if (room_id != mainRoom) {
+      room_id = room_id + '_' + _clientUserId;
+      
+      if (rooms.indexOf(room_id) == -1) {
+        // Create private chat between this socket and client
+        socket.join(room_id);
+        userSockets[clientId].join(room_id);
 
-                rooms.push(room_id);
-            }
-        }
-
-        // Create message content to hold between these two users
-        io.sockets.in(room_id).emit('subscribe', _clientId, room_id);
-    });
-    // Show desktop notification
-    $(function() {
-        // request permission on page load
-        if (Notification.permission !== "granted")
-            Notification.requestPermission();
-    });
-
-    function notifyMe(data) {
-        if (!Notification) {
-            alert('Desktop notifications not available in your browser. Try Chromium.');
-            return;
-        }
-
-        if (Notification.permission !== "granted")
-            Notification.requestPermission();
-        else {
-            var notification = new Notification('New message', {
-                icon: SERVER + '/images/so_icon.png',
-                body: data.message,
-            });
-
-            // Open and active current chat window
-            notification.onclick = function () {
-                chatWindow.focus();
-            };
-        }
+        rooms.push(room_id);
+      }
     }
 
+    // Create message content to hold between these two users
+    io.sockets.in(room_id).emit('subscribe', _clientId, room_id);
+  });
+
+  // Listen for regist action
+  socket.on('regist', function (data) {
+    User.findOne({ username: data.username }, function (err, user) {
+      if (user == null) {
+        var newUser = new User({
+          username: data.username,
+          password: data.password
+        });
+
+        // Save user to database
+        newUser.save(function (err) {
+          console.log(err);
+
+          if (err == null) {
+            // Make this user online
+            User.findOne({ username: data.username }, function (err, user) {
+              console.log('User ' + user.username + ' is online');
+
+              users.push({"client_id" : _clientId, "user_name" : data.username, "user_id": user.user_id});
+
+              userSockets[_clientId] = socket;
+              
+              // Add new user to channel
+              io.sockets.emit('show_user', user.user_id, _clientId, users);
+            });
+          }
+        })
+      } else {
+        socket.emit('exception', {message: 'This user is already registered'});
+      }
+    });
+  });
+  
+  // Login event
+  socket.on('login', function (data) {
+    User.findOne({ username: data.username }, function (err, user) {
+      if (user == null) {
+        socket.emit('exception', {message: 'This user is not exist. Please create your account !'});
+      } else {
+        User.findOne( { username: data.username, password: data.password }, function (err, user) {
+          if (user == null) {
+            socket.emit('exception', {message: 'Wrong password !'});
+          } else {
+            console.log('User ' + user.username + ' is online');
+            // Add new user to store
+            users.push({"client_id" : _clientId, "user_name" : data.username, "user_id": user.user_id});
+
+            userSockets[_clientId] = socket;
+
+            // Add new user to channel
+            io.sockets.emit('show_user', user.user_id, _clientId, users);
+          }
+        });
+      }
+    });
+  });
+
+  // Listen for disconnect event
+  socket.on('disconnect', function () {
+    // Update current users online
+    functions.removeObject(users, _clientId);
+
+    // Remove user from all client channel
+    io.sockets.emit('remove_user', _clientId, users);
+
+    console.log('User ' + _clientId + ' disconnected');
+  });
 });
 
+server.listen(port);
+console.log('Server started on port ' + port);
