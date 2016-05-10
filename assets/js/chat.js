@@ -106,3 +106,60 @@ $(window).load(function() {
     ]
   });
 
+  // On exception, show alert dialog and reset username
+  socket.on('exception', function (data) {
+    _username = null;
+
+    alert(data.message);
+  });
+
+  /** Trigger message event
+  * _clientUserId id of user on server database
+  * _clientId id of current user socket
+  * data hold message data
+  */
+  socket.on('message', function (_clientUserId, _clientId, data) {
+    console.log('Message on room ' + data.room_id);
+    var room_id = data.room_id;
+
+    var tempRoom = room_id.split('_');
+    var tempRoomId = tempRoom.length == 2 ? tempRoom[1] + '_' + tempRoom[0] : '';
+
+    if(data.message) {
+      var cls = 'row';
+      // Handle on destination client
+      if (_clientId != clientId) {
+        cls = 'row_other';
+        notifyMe(data);
+
+        // If not is MAIN_ROOM, show unread count message
+        if (room_id == MAIN_ROOM) {
+          if (currRoomId != MAIN_ROOM) {
+            var currUnread = $('#user-list li#main_room .unread').text();
+            currUnread++;
+            $('#user-list li#main_room .unread').text(currUnread).show();
+          }
+        } else if (currRoomId != room_id && currRoomId != tempRoomId) {
+          // Show unread count message on private chat
+          var currUnread = $('#user-list li[data-rid=' + _clientUserId + '] .unread').text();
+          currUnread++;
+          $('#user-list li[data-rid=' + _clientUserId + '] .unread').text(currUnread).show();
+        }
+      }
+
+      if (currRoomId == room_id || tempRoomId == currRoomId) {
+        // Show message on screen
+        var date = new Date();
+        var html = '<div class="' + cls + '">' +
+        '<div class="r-message"><div class="username">' + data.username + '</div><div class="message">' + data.message + '</div>' +
+        '<div class="profile"><img src="/images/profile.jpg" class="img-rounded"></div></div>' +
+        '<div class="date">' + date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2) + '</div>' +
+        '</div>';
+        $('#' + MAIN_ROOM).append(html).scrollTop($('#' + MAIN_ROOM)[0].scrollHeight);
+      }
+    } else {
+      console.log("There is a problem:", data);
+    }
+  });
+
+
