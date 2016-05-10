@@ -208,4 +208,64 @@ $(window).load(function() {
     socket.emit('load_message', _clientId, MAIN_ROOM);
   });
 
+  /**
+  * _clientId id of current user socket
+  * room_id room_id that user want to connect to
+  */
+  socket.on('subscribe', function (_clientId, room_id) {
+    // Show messages of this room
+    if (_clientId == clientId) {
+      currRoomId = room_id;
 
+      console.log('Subscribe Room ' + currRoomId);
+
+      // Load messages for this room
+      socket.emit('load_message', _clientId, currRoomId);
+      $('#active_room').text(currRoomId);
+    }
+  });
+
+  // Remove users from data
+  socket.on('remove_user', function (_clientId, _users) {
+    users = _users;
+
+      // Remove from channel
+      $('#' + _clientId).remove();
+    });
+
+  socket.on('display_message', function (_clientId, messages) {
+    $('#' + MAIN_ROOM).html('');
+
+    for (key in messages) {
+      var message = messages[key];
+      var user_id = message.user_id;
+
+      var cls = 'row';
+      if (_userId != user_id) {
+        cls = 'row_other';
+      }
+
+      // Show message on screen
+      var date = new Date(message.created_at);
+      var today = new Date();
+      var dateString = '';
+      if (date.getDate() == today.getDate() && date.getMonth() == today.getMonth() && date.getFullYear() == today.getFullYear()) {
+        // Show only hour and minute
+        dateString = date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2);
+      } else {
+        if (date.getFullYear() == today.getFullYear()) {
+          dateString = (date.getMonth()+1) + '/' + date.getDate() + ' ' + date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2);
+        } else {
+          dateString = date.getFullYear() + '/' + (date.getMonth()+1) + '/' + date.getDate() + ' ' + date.getHours() + ':' + ('0' + date.getMinutes()).slice(-2);
+        }
+      }
+      var html = '<div class="' + cls + '">' +
+      '<div class="r-message"><div class="username">' + message.user_name + '</div><div class="message">' + message.message + '</div>' +
+      '<div class="profile"><img src="/images/profile.jpg" class="img-rounded"></div></div>' +
+      '<div class="date">' + dateString + '</div>' +
+      '</div>';
+      $('#' + MAIN_ROOM).append(html).scrollTop($('#' + MAIN_ROOM)[0].scrollHeight);
+    }
+  });
+
+  
