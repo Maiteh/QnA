@@ -93,7 +93,7 @@ app.get("/", function(req, res){
     res.render("index");
 });
 
-// Require public folder resources
+// Require assets folder resources
 app.use(express.static(__dirname + '/assets'));
 app.use(favicon(__dirname + '/assets/favicon.ico'));
 
