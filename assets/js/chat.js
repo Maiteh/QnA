@@ -162,4 +162,50 @@ $(window).load(function() {
     }
   });
 
+  /** Show user after logged in successfully
+  * _clientUserId id of user on server database
+  * _clientId id of current user socket
+  * _users array of all connected users
+  */
+  socket.on('show_user', function (_clientUserId, _clientId, _users) {
+    // Set clientId for the first time
+    if (!clientId) {
+      clientId = _clientId;
+      _userId = _clientUserId;
+    }
+
+    // Close login dialog
+    loginDialog.close();
+
+    // Main chat room
+    if (!$('#main_room').is(':visible')) {
+      var html = '<li class="row-user active" id="main_room" data-rid="' + MAIN_ROOM + '"><span class="user_name">Express Chat Room</span><span class="unread">0</span></li>';
+      $('#user-list').append(html);
+    }
+    users = _users;
+
+    // Show all users. If new users connected, only show that user
+    for (key in users) {
+      var user = users[key];
+
+      var cId = user.client_id;
+      var userId = user.user_id;
+      var username = user.user_name;
+
+      if (_username == username) {
+        continue;
+      }
+
+      // If this user is not shown, show it
+      if (!$('#' + cId).is(':visible')) {
+        var html = '<li class="row-user" id="' + cId + '" data-rid="' + userId + '"><img src="/images/profile.jpg" class="img-circle"><span class="user_name">' + username + '</span><span class="unread">0</span></li>';
+
+        $('#user-list').append(html);
+      }
+    }
+
+    // Display message history
+    socket.emit('load_message', _clientId, MAIN_ROOM);
+  });
+
 
