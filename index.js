@@ -1,75 +1,79 @@
 var express = require("express");
-var http = require('http');
-var app = express();
+var mongoose = require('mongoose');
 var assert = require("assert");
 var favicon = require('serve-favicon');
 var autoIncrement = require('mongoose-auto-increment');
 //Mongo connection to save the messages
-var mongoose = require('mongoose');
 var url = 'mongodb://localhost:27017/q-a';
+var functions = require("./public/js/functions.js");
+
 var Schema = mongoose.Schema;
 var connection = mongoose.createConnection(url);
 autoIncrement.initialize(connection);
 
-// Defining Schema model for mongo db. For the users.
+// Defining model for mongodb
 var userSchema = new Schema({
-    user_id: Number,
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    created_at: Date,
-    updated_at: Date
+  user_id: Number,
+  username: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  created_at: Date,
+  updated_at: Date
 });
+
 // Add the date before any save
-userSchema.pre('save', function (next) {
-    // get the current date
-    var currentDate = new Date();
+userSchema.pre('save', function(next) {
+  // get the current date
+  var currentDate = new Date();
+  
+  // change the updated_at field to current date
+  this.updated_at = currentDate;
 
-    // change the updated_at field to current date
-    this.updated_at = currentDate;
+  // if created_at doesn't exist, add to that field
+  if (!this.created_at)
+    this.created_at = currentDate;
 
-    // if created_at doesn't exist, add to that field
-    if (!this.created_at)
-        this.created_at = currentDate;
-
-    next();
+  next();
 });
+
 var messageSchema = new Schema({
-    message_id: Number,
-    user_id: String,
-    user_name: String,
-    room_id: String,
-    message: String,
-    created_at: Date
+  message_id: Number,
+  user_id: String,
+  user_name: String,
+  room_id: String,
+  message: String,
+  created_at: Date
 });
+
 // Add the date before any save
 messageSchema.pre('save', function(next) {
-    // get the current date
-    var currentDate = new Date();
+  // get the current date
+  var currentDate = new Date();
+  
+  // change the updated_at field to current date
+  this.updated_at = currentDate;
 
-    // change the updated_at field to current date
-    this.updated_at = currentDate;
+  // if created_at doesn't exist, add to that field
+  if (!this.created_at)
+    this.created_at = currentDate;
 
-    // if created_at doesn't exist, add to that field
-    if (!this.created_at)
-        this.created_at = currentDate;
-
-    next();
+  next();
 });
 
 // Create User and Message schema
 // This is where we will use the autoincrement.
 userSchema.plugin(autoIncrement.plugin, {
-    model: 'User',
-    field: 'user_id',
-    startAt: 1,
-    incrementBy: 1
+  model: 'User',
+  field: 'user_id',
+  startAt: 1,
+  incrementBy: 1
 });
 messageSchema.plugin(autoIncrement.plugin, {
-    model: 'Message',
-    field: 'message_id',
-    startAt: 1,
-    incrementBy: 1
+  model: 'Message',
+  field: 'message_id',
+  startAt: 1,
+  incrementBy: 1
 });
+
 // Create User and Message schema
 var User = connection.model('User', userSchema);
 var Message = connection.model('Message', messageSchema);
@@ -83,19 +87,19 @@ var userSockets = [];
 var rooms = [];
 var mainRoom = 'Webtech 2';
 
-// declare where you define your views
-app.set('views', __dirname + '/views');
 //what view engine, ejs or jade
+// Setting template engine Jade
+app.set('views', __dirname + '/tpl');
 app.set('view engine', "jade");
 app.engine('jade', require('jade').__express);
 
 app.get("/", function(req, res){
-    res.render("index");
+  res.render("index");
 });
 
-// Require assets folder resources
-app.use(express.static(__dirname + '/assets'));
-app.use(favicon(__dirname + '/assets/favicon.ico'));
+// Require public folder resources
+app.use(express.static(__dirname + '/public'));
+app.use(favicon(__dirname + '/public/favicon.ico'));
 
 // Pass express to socket.io
 var io = require('socket.io').listen(server);

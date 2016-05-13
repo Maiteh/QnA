@@ -1,15 +1,19 @@
-// SERVER address and port
-var SERVER = 'http://localhost:3000';
+/**
+* TODO: Stream simple music between clients
+*/
 
-var MAIN_ROOM = 'Intro Q&A';
+// SERVER address and port
+var SERVER = 'http://localhost:3700';
+
+var MAIN_ROOM = 'expresschat';
 
 // Chat window is current window
 var chatWindow = window.self;
 
-$(window).load(function () {
+$(window).load(function() {
 
   // Add regular expression to check username valid
-  $.validator.addMethod("regex", function (value, element, regexpr) {
+  $.validator.addMethod("regex", function(value, element, regexpr) {          
     return regexpr.test(value);
   }, "Please enter a valid username.");
 

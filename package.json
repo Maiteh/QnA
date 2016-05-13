@@ -1,23 +1,12 @@
 {
-  "name": "live-chat",
-  "version": "0.0.1",
-  "description": "my first socket.io app",
-  "dependencies": {
-    "assert": "^1.3.0",
-    "express": "^4.13.4",
-    "jade": "^1.11.0",
-    "mongoose": "^4.4.13",
-    "mongoose-auto-increment": "^5.0.1",
-    "serve-favicon": "^2.3.0",
-    "socket.io": "^1.4.5"
-  },
-  "devDependencies": {
-    "browser-sync": "^2.12.5",
-    "express": "^4.13.4",
-    "gulp": "^3.9.1",
-    "gulp-concat-css": "^2.2.0",
-    "gulp-livereload": "^3.8.1",
-    "gulp-nodemon": "^2.0.6",
-    "gulp-notify": "^2.2.0"
-  }
+    "name": "ExpressChat",
+    "version": "1.0.0",
+    "description": "Real time express web chat",
+    "dependencies": {
+        "socket.io": "latest",
+        "express": "latest",
+        "jade": "latest",
+        "mongoose": "latest"
+    },
+    "author": "developer"
 }
