@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+// Connect to local mongo using Mongoose API
 var dbConfig = require('./db');
 var mongoose = require('mongoose');
 // Connect to DB
@@ -28,7 +29,12 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Configuring Passport
+/**
+* Configuring Passport
+* Passport just provides the mechanism to handle authentication
+* leaving the onus of implementing session-handling ourselves
+* and for that we will be using express-session
+*/
 var passport = require('passport');
 var expressSession = require('express-session');
 app.use(expressSession({secret: 'mySecretKey'}));
