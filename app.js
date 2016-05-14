@@ -12,6 +12,9 @@ mongoose.connect(dbConfig.url);
 
 var app = express();
 
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -26,7 +29,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Configuring Passport
 var passport = require('passport');
 var expressSession = require('express-session');
-// TODO - Why Do we need this key ?
 app.use(expressSession({secret: 'mySecretKey'}));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -40,8 +42,15 @@ app.use(flash());
 var initPassport = require('./passport/init');
 initPassport(passport);
 
-var routes = require('./routes/index')(passport);
+
+// Declaring the routes.
+var routes = require('./routes/index');
+var users = require('./routes/users');
+var discussions = require('./routes/discussions');
+
 app.use('/', routes);
+app.use('/users', users);
+app.use('/discussions', discussions);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
