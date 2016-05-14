@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var handlebars = require('express-handlebars');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -17,7 +18,8 @@ var io = require('socket.io')(http);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.engine('handlebars', handlebars({defaultLayout:'layout'}));
+app.set('view engine', 'handlebars');
 
 app.use(favicon());
 app.use(logger('dev'));
@@ -44,13 +46,11 @@ initPassport(passport);
 
 
 // Declaring the routes.
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var discussions = require('./routes/discussions');
+var routes = require('./routes/index')(passport);
+//var discussions = require('./routes/discussions');
 
 app.use('/', routes);
-app.use('/users', users);
-app.use('/discussions', discussions);
+//app.use('/discussions', discussions);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
