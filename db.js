@@ -1,3 +1,4 @@
 module.exports = {
-  'url' : 'mongodb://localhost/passport'
+	//'url' : 'mongodb://<dbuser>:<dbpassword>@novus.modulusmongo.net:27017/<dbName>'
+	'url' : 'mongodb://localhost/q-a'
 }
