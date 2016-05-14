@@ -10,6 +10,42 @@ var users = require('./routes/users');
 
 var app = express();
 
+// Connect to local mongo using Mongoose API
+var dbConfig = require('./db.js');
+var mongoose = require('mongoose');
+mongoose.connect(dbConfig.url);
+
+/**
+* Configuring Passport
+* Passport just provides the mechanism to handle authentication 
+* leaving the onus of implementing session-handling ourselves 
+* and for that we will be using express-session
+*/
+var passport = require('passport');
+var expressSession = require('express-session');
+app.use(expressSession({secret: 'mySecretKey'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+/**
+* Serializing and Deserializing user instances
+* Passport needs to serialize and deserialize user instance from
+* a session store in order to support login sessions 
+* so that every subsequent request will not contain the user credentials.
+* For this we use 2 methods.
+*/
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+ 
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
