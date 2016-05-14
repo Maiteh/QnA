@@ -18,6 +18,10 @@ module.exports = function(passport){
     // passReqToCallback allows to access the request object in the callback, 
     passReqToCallback : true  
   },
+
+	passport.use('login', new LocalStrategy({
+            passReqToCallback : true
+        },
         function(req, username, password, done) { 
             // check in mongo if a user with username exists or not
             User.findOne({ 'username' :  username }, 
