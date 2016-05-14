@@ -7,17 +7,13 @@ var User = require('../models/user');
 var bCrypt = require('bcrypt-nodejs');
 
 module.exports = function(passport){
-    
   /**
   * The first parameter is the name of the strategy which will be used to 
   * identify this strategy when applied later
   * The second parameter is the type of strategy that you want to create, 
   * here we use the username-password or the LocalStrategy
   */
-  passport.use('login', new LocalStrategy({
     // passReqToCallback allows to access the request object in the callback, 
-    passReqToCallback : true  
-  },
 
 	passport.use('login', new LocalStrategy({
             passReqToCallback : true
