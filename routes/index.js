@@ -1,61 +1,21 @@
-/**
-* Important is the passport.authenticate() to delegate 
-* the authentication to login and signup strategies when 
-* a HTTP POST is made to /login and /signup routes respectively. 
-* Note that it is not mandatory to name the strategies on the route path and 
-* it can be named anything.
-*/
-var express = require('express');
-var router = express.Router();
 
-var isAuthenticated = function (req, res, next) {
-	// if user is authenticated in the session, call the next() to call the next request handler 
-	// Passport adds this method to request object. A middleware is allowed to add properties to
-	// request and response objects
-	if (req.isAuthenticated())
+var express    = require('express');
+var router     = express.Router();
+var mongoose   = require('mongoose');
+var Discussion = require('../models/discussion');
+
+router.get('/', ensureAuthenticated, function(req, res){
+	Discussion.find( function(err, docs) {
+       	res.render('index', {data: docs});
+    });
+});
+
+function ensureAuthenticated(req, res, next){
+    if(req.isAuthenticated()) {
 		return next();
-	// if the user is not authenticated then redirect him to the login page
-	res.redirect('/');
+	} else {
+		//req.flash('error_msg','You are not logged in');
+		res.redirect('/users/login');
+	}
 }
-
-module.exports = function(passport){
-
-	/* GET login page. */
-	router.get('/', function(req, res) {
-    	// Display the Login page with any flash message, if any
-		res.render('index', { message: req.flash('message') });
-	});
-
-	/* Handle Login POST */
-	router.post('/login', passport.authenticate('login', {
-		successRedirect: '/home',
-		failureRedirect: '/',
-		failureFlash : true  
-	}));
-
-	/* GET Registration Page */
-	router.get('/signup', function(req, res){
-		res.render('register',{message: req.flash('message')});
-	});
-
-	/* Handle Registration POST */
-	router.post('/signup', passport.authenticate('signup', {
-		successRedirect: '/home',
-		failureRedirect: '/signup',
-		failureFlash : true  
-	}));
-
-	/* GET Home Page */
-	router.get('/home', isAuthenticated, function(req, res){
-		res.render('home', { user: req.user });
-	});
-
-	/* Handle Logout */
-	router.get('/signout', function(req, res) {
-		req.logout();
-		res.redirect('/');
-	});
-
-	return router;
-}
-
+module.exports = router;
