@@ -1,0 +1,35 @@
+.back a
+{
+    display: inline-block;
+    width: 100%;
+    background-color: $material-pink;
+    font-size: 16px;
+    color: $white;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: 1px;
+    padding: 10px;
+    border-radius: 1px;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.back a:hover
+{
+    background-color: rgba(233, 30, 99, 0.8);
+}
+
+.wrap-title-discussion
+{
+    width: 100%;
+    height: auto;
+    margin-top: 25px;
+}
+
+.message-discussion
+{
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: $dark-blue-gray;
+}

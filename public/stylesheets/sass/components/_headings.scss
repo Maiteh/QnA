@@ -1,0 +1,34 @@
+h1
+{
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-bottom: 5px;
+    color: $dark-blue-gray;
+    margin: 0;
+}
+h2
+{
+    font-size: 20px;
+    letter-spacing: 1px;
+    margin: 0;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-left: 3px solid $material-pink;
+    color: $dark-blue-gray;
+}
+.h1-dis
+{
+    margin-bottom: 25px;
+    border-left: 3px solid $material-pink;
+    padding-left: 20px;
+    padding-top: 5px;
+}
+.title-discussion
+{
+    font-size: 25px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: $dark-blue-gray;
+    padding-top: 15px;
+}

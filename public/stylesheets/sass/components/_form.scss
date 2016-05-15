@@ -1,0 +1,59 @@
+input
+{
+	display: block;
+	margin-bottom: 20px;
+}
+.textfield
+{
+	width: 100%;
+	max-width: 500px;
+	padding: 15px 30px;
+	font-size: 0.9em;
+	border: none;
+	border: 1px solid gray;
+    outline: none !important;
+}
+.textarea
+{
+	height: 240px;
+	max-width: 100%;
+	resize: none;
+	padding: 30px;
+}
+
+.textfield-d
+{
+	width: 100%;
+	padding: 15px 30px;
+	font-size: 16px;
+	border: none;
+	border: 1px solid $dark-blue-gray;
+    color: $dark-blue-gray;
+    outline: none !important;
+}
+
+.textarea-d
+{
+	height: 150px;
+	max-width: 100%;
+	resize: none;
+	padding: 30px;
+}
+.textfield-a
+{
+	width: 50%;
+	padding: 5px 10px;
+	font-size: 12px;
+	border: none;
+	border: 1px solid $dark-blue-gray;
+    color: $dark-blue-gray;
+    outline: none !important;
+}
+
+.textarea-a
+{
+	height: 25px;
+	max-width: 50%;
+	resize: none;
+	padding: 5px;
+}

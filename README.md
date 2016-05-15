@@ -18,25 +18,33 @@ The app will be running on *localhost:3000*.
 
 ----------
 ###  What do we have so far
-When surfing to localhost:3000 you'll get a login screen where you can choose a login name and password.
-Then you'll enter the main room where you can start chatting.
+When surfing to localhost:3000 you'll get a login page with the option to create an account. 
+When the account is created you will be redirected to the login page again and you van login now.
+When logged in you'll see a page that displays your information.
 
 >**Todo**
 
-> - Change this to a list of all rooms (= discussions) 
-> - Creating new Discussion.
-> - The new "chatpost" will be a Question.
-> - Be able to post an awnser/comment on the question.
-> - Make user who started a discussion the moderator.
-> - Keep track of the geolocation.
-> - Categorise the conversations that are near you.
-> - Post images.
-> - Show images in discussion.
-> - Moderator of the discussion should be able to delete questions and comments..
-> - Deleting should be LIVE. 
-> - Completing Gulp file.
-> 
-And ofcourse cleaning up the code, organise everything, and understand what is happening.
+> - Show user who posted topic
+> - show user who posted question
+> - Make questions added realtime
+> - add awnser to question 
+> - show user who posted awnser
+> - make awsners realtime
+> - save the location of the post 
+> - view who is active in the discussion. 
+> - view which discussions are nearby
+> - make the creator of the discussion the moderator
+> - give moderator option to delete or edit their posts.
+> - able to upload images in post.
 
 ----------
 
+>**Documentation list**
+
+> - Express validate
+> https://github.com/ctavan/express-validator 
+> - passport
+>
+> http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-with-passport--cms-21619
+> http://passportjs.org
+> - 
