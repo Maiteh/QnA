@@ -28,6 +28,7 @@ When logged in you'll see a page that displays your information.
 > - show user who posted question
 > - Make questions added realtime
 > - add awnser to question 
+> - show user who posted awnser
 > - make awsners realtime
 > - save the location of the post 
 > - view who is active in the discussion. 
