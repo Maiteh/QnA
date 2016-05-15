@@ -1,0 +1,41 @@
+.mes-dis
+{
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: $dark-blue-gray;
+    padding-bottom: 15px;
+}
+
+.wrap-each-discussion
+{
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid #e5e5e5;
+}
+.wrap-each-discussion:last-child
+{
+    border: none;
+}
+
+.wrap-each-discussion:hover
+{
+    background-color: #e5e5e5;
+}
+.wrap-each-discussion,
+.title-discussion,
+.mes-dis
+{
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+.wrap-each-discussion:hover .title-discussion,
+.wrap-each-discussion:hover .mes-dis
+{
+    padding-left: 10px;
+}
+
+.wrap-each-discussion a
+{
+    text-decoration: none;
+}

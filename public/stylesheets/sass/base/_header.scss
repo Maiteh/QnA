@@ -1,0 +1,36 @@
+.page-header{
+    border: none;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 25px;
+    border-left: 3px solid $material-pink;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.header,
+.marketing,
+.footer {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 40px;
+  color: $material-pink;
+}
+
+.header ul li a {
+  color: $dark-blue-gray;
+  font-size: 16px;
+}
