@@ -18,7 +18,7 @@ var app              = express();
 var http             = require('http').Server(app);
 var io               = require('socket.io')(http);
 
-mongoose.connect('mongodb://localhost/q-a');
+mongoose.connect('mongodb://localhost/qna');
 
 app.use(express.static(__dirname + '/public'));
 
