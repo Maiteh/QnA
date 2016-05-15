@@ -10,8 +10,11 @@
 {{#each question}}
     <h2>{{this.question}}</h2>
     
-    <h2>{{this.answer}}</h2>
-    
+    <p>{{this.answer}}</p>
+    <form action="" method="post">
+        <textarea name="anwser" placeholder="Anwser" class="textfield-a textarea-a"></textarea>
+        <input type="submit" value="Anwser" class="button button-a">
+    </form>
     <div class="line-gray"></div>
 {{/each}}
 

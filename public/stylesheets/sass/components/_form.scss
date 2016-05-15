@@ -39,3 +39,21 @@ input
 	resize: none;
 	padding: 30px;
 }
+.textfield-a
+{
+	width: 50%;
+	padding: 5px 10px;
+	font-size: 12px;
+	border: none;
+	border: 1px solid $dark-blue-gray;
+    color: $dark-blue-gray;
+    outline: none !important;
+}
+
+.textarea-a
+{
+	height: 25px;
+	max-width: 50%;
+	resize: none;
+	padding: 5px;
+}

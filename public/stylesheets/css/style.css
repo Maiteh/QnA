@@ -117,9 +117,6 @@ body {
   letter-spacing: 1px;
   color: #37474F; }
 
-.question {
-  display: none; }
-
 .btn-default {
   margin-bottom: 20px; }
 
@@ -164,6 +161,18 @@ body {
 .btn-ask-question:hover {
   background-color: rgba(233, 30, 99, 0.8); }
 
+.button-a {
+  width: 70px;
+  height: auto;
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 1px;
+  padding: 3px;
+  background-color: #E91E63;
+  border-radius: 1px; }
+
 input {
   display: block;
   margin-bottom: 20px; }
@@ -197,6 +206,21 @@ input {
   max-width: 100%;
   resize: none;
   padding: 30px; }
+
+.textfield-a {
+  width: 50%;
+  padding: 5px 10px;
+  font-size: 12px;
+  border: none;
+  border: 1px solid #37474F;
+  color: #37474F;
+  outline: none !important; }
+
+.textarea-a {
+  height: 25px;
+  max-width: 50%;
+  resize: none;
+  padding: 5px; }
 
 h1 {
   text-transform: uppercase;

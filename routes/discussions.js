@@ -6,7 +6,9 @@ var http = require('http').Server(express);
 var io = require('socket.io')(http);
 
 var Discussion = require('../models/discussion');
+var Answer     = require('../models/answer');
 var Question   = require('../models/question');
+
 
 router.get('/create', ensureAuthenticated, function (req, res) {
 	res.render('create');
@@ -16,8 +18,8 @@ router.get('/:id', ensureAuthenticated, function (req, res) {
     Discussion.count({ '_id': req.params.id }, function (err, count) {
         if (count === 1) {
             Discussion.find({ '_id': req.params.id }, function (err, docs) {
-                Question.find({ 'discussionId': docs[0].id }, function (err, docs2) {
-                    res.render('discussion', {"title": docs[0].title, "message": docs[0].message, "userId": docs[0].userId, "question": docs2});
+                Question.find({ 'discussionId': docs[0].id }, function (err, docs2, docs3) {
+                    res.render('discussion', {"title": docs[0].title, "message": docs[0].message, "userId": docs[0].userId, "question": docs2, "answer": docs3});
                 });
             });
         } else {
@@ -55,6 +57,21 @@ router.post('/:id', urlencodedParser, function (req, res) {
 			return err;
 	    } else {
             console.log("A new question is opened with id: " + room.id);
+            res.redirect(req.params.id);
+	    }
+	});
+});
+
+// POST for answers
+router.post('/:id', urlencodedParser, function (req, res) {
+    var answer = new Anwser({answer: req.body.answer, discussionId: req.params.id, questionId: req.params.id});
+
+	//save model to MongoDB
+	answer.save(function (err, room) {
+	    if (err) {
+			return err;
+	    } else {
+            console.log("A new answer is posted with id: " + room.id);
             res.redirect(req.params.id);
 	    }
 	});
