@@ -1,31 +1,35 @@
-var express = require('express');
-var path = require('path');
-var handlebars = require('express-handlebars');
-var favicon = require('static-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+var express          = require('express');
+var path             = require('path');
+var favicon          = require('static-favicon');
+var logger           = require('morgan');
+var cookieParser     = require('cookie-parser');
+var bodyParser       = require('body-parser');
+var handlebars       = require('express-handlebars');
+var expressValidator = require('express-validator');
+var flash            = require('connect-flash');
+var expressSession   = require('express-session');
+var passport         = require('passport');
+var LocalStrategy    = require('passport-local').Strategy;
+var mongo            = require('mongodb');
+var mongoose         = require('mongoose');
 
-// Connect to local mongo using Mongoose API
-var dbConfig = require('./db');
-var mongoose = require('mongoose');
-// Connect to DB
-mongoose.connect(dbConfig.url);
+var app              = express();
 
-var app = express();
+var http             = require('http').Server(app);
+var io               = require('socket.io')(http);
 
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+mongoose.connect('mongodb://localhost/q-a');
 
-// view engine setup
+app.use(express.static(__dirname + '/public'));
+
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', handlebars({defaultLayout:'layout'}));
+app.engine('handlebars', handlebars({defaultLayout: 'layout'}));
 app.set('view engine', 'handlebars');
 
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -35,46 +39,59 @@ app.use(express.static(path.join(__dirname, 'public')));
 * leaving the onus of implementing session-handling ourselves
 * and for that we will be using express-session
 */
-var passport = require('passport');
-var expressSession = require('express-session');
-app.use(expressSession({secret: 'mySecretKey'}));
+app.use(expressSession({
+    secret: 'QnA',
+    saveUninitialized: true,
+    resave: true
+}));
+
+// Passport init
 app.use(passport.initialize());
 app.use(passport.session());
 
- // Using the flash middleware provided by connect-flash to store messages in session
- // and displaying in templates
-var flash = require('connect-flash');
+// Express Validator
+// Validate user input
+app.use(expressValidator({
+    errorFormatter: function (param, msg, value) {
+        var namespace = param.split('.'),
+            root      = namespace.shift(),
+            formParam = root;
+        while (namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param : formParam,
+            msg   : msg,
+            value : value
+        };
+    }
+}));
+
+// Using the flash middleware provided by connect-flash to store 
+// messages in session and displaying in templates
 app.use(flash());
 
-// Initialize Passport
-var initPassport = require('./passport/init');
-initPassport(passport);
-
-
-// Declaring the routes.
-var routes = require('./routes/index')(passport);
-//var discussions = require('./routes/discussions');
-
-app.use('/', routes);
-//app.use('/discussions', discussions);
-
-/// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+// Global variables, status messages
+app.use(function (req, res, next) {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg   = req.flash('error_msg');
+    res.locals.error       = req.flash('error');
+    res.locals.user        = req.user || null;
+    next();
 });
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
-    });
-}
+var routes      = require('./routes/index');
+var users       =  require('./routes/users');
+var discussions = require('./routes/discussions');
 
-module.exports = app;
+app.use('/', routes);
+app.use('/users', users);
+app.use('/discussions', discussions);
+
+http.listen(3000, function () {
+    console.log('listening on port 3000');
+});
+
+
+
+

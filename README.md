@@ -43,3 +43,14 @@ In the fist one you'll start mongoDB with `mongod`
 In the second one browse to the folder of the app 
 Install all the modules with `npm install`
 and run the app with `npm start`
+
+----------
+
+>**Documentation list**
+
+> - Express validate
+> https://github.com/ctavan/express-validator 
+> - passport
+> http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-with-passport--cms-21619
+> http://passportjs.org
+> - 
