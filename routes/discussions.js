@@ -2,6 +2,8 @@ var express    = require('express');
 var router     = express.Router();
 var mongoose   = require('mongoose');
 var bodyParser = require('body-parser');
+var http = require('http').Server(express);
+var io = require('socket.io')(http);
 
 var Discussion = require('../models/discussion');
 var Question   = require('../models/question');
@@ -66,4 +68,8 @@ function ensureAuthenticated(req, res, next) {
 		res.redirect('/users/login');
 	}
 }
+
+
+
+
 module.exports = router;

@@ -24,16 +24,17 @@ When logged in you'll see a page that displays your information.
 
 >**Todo**
 
-> - create home page with list of discussions
-> - be able to create discussion
-> - view detail page of discussion
-> - add question in discussion
+> - Show user who posted topic
+> - show user who posted question
+> - Make questions added realtime
 > - add awnser to question 
+> - make awsners realtime
 > - save the location of the post 
 > - view who is active in the discussion. 
 > - view which discussions are nearby
 > - make the creator of the discussion the moderator
 > - give moderator option to delete or edit their posts.
+> - able to upload images in post.
 
 ----------
 
