@@ -18,11 +18,11 @@ body {
 	padding-right: 20px;
 	padding-left: 20px; 
 }
-.header {
+header.header {
 	background-color:#FF9800;
 	margin-bottom: 0;
 }
-.header h3 {
+header.header h3 {
 	margin: 0 auto;
 	line-height: 3em;
 	color: #fff; 
