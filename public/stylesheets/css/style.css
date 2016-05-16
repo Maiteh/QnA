@@ -62,7 +62,7 @@ a.discussion-topic {
 .wrapper-discussions {
     width: 100%;
     height: 100%;
-    border-bottom: 1px solid $lightgrey;
+    border-bottom: 1px solid #e5e5e5;
 }
 .wrapper-discussions:last-child {
     border: none;
@@ -73,24 +73,20 @@ a.discussion-topic {
 .wrapper-discussions a {
     text-decoration: none;
 }
-.back a {
-  display: inline-block;
-  width: 100%;
-  background-color: #E91E63;
-  font-size: 16px;
-  color: #fff;
-  text-decoration: none;
-  text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 1px;
-  padding: 10px;
-  border-radius: 1px;
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out; }
-
-.back a:hover {
-  background-color: rgba(233, 30, 99, 0.8); }
-
+a.btn-primary-back{
+	display:inline-block;
+	text-align: center;
+	display: inline-block;
+	width: 100%;
+	background-color: #FFB74D;
+	font-size: 1.2em;
+	color: #fff;
+	text-decoration: none;
+	padding: 20px;
+}
+a.btn-primary-back:hover {
+  background-color: #FF9800;
+}
 .btn-primary {
 	margin-bottom: 20px; 
 }
