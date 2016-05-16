@@ -1,28 +1,22 @@
-<div class="back"><a href="/">Back to discussions</a></div>
+<a href="/" class="btn-primary-back">Back to discussions</a>
 
 <div class="wrap-title-discussion">
-    <h1>{{title}}</h1>
-    <p> By {{userId.username}}</p>
-    <div class="message-discussion">{{message}}</div>
+    <div class="title-discussion">{{title}}</div>
+    <div class="msg-discussion">{{message}}</div>
+    <p>By {{userId.username}}</p>
 </div>
 
-<div class="line-gray"></div>
-{{#each data}}
+{{#each question}}
     <h2>{{this.question}}</h2>
-
-    {{#each this.answers}}
-        <p>{{this.answer}}</p>
-    {{/each}}
-    <form action="/answers/{{../discussionId}}" method="post">
-        <input type="hidden" name="questionId" value="{{this._id}}">
+    
+    <p>{{this.answer}}</p>
+    <form action="" method="post">
         <textarea name="answer" placeholder="Answer" class="textfield-a textarea-a"></textarea>
-        <input type="submit" value="Answer" class="button button-a">
+        <button type="submit" value="Answer" class="btn btn-primary">Answer</button>
     </form>
-    <div class="line-gray"></div>
 {{/each}}
 
-
-    <form action="/questions/{{discussionId}}" method="post">
+    <form action="" method="post">
         <textarea name="question" placeholder="Question" class="textfield-d textarea-d"></textarea>
-        <input type="submit" value="Ask a new Question" class="button">
+        <button type="submit" value="Ask a new question" class="btn btn-primary">Ask a new question</button>
     </form>

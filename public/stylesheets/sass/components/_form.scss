@@ -1,65 +1,41 @@
-form {
-	margin-top:0;
-}
-label.first {
-	margin-top:20px;
-}	
-.form-control {
-	border-radius:0;
-}input
-{
+input {
 	display: block;
-	margin-bottom: 20px;
+	margin-bottom: 20px; 
 }
-.textfield
-{
+.textfield {
 	width: 100%;
 	max-width: 500px;
 	padding: 15px 30px;
-	font-size: 0.9em;
-	border: none;
-	border: 1px solid gray;
-    outline: none !important;
+	font-size: 1em;
+	border: 0;
 }
-.textarea
-{
-	height: 240px;
-	max-width: 100%;
-	resize: none;
-	padding: 30px;
+.textarea {
+	height: 250px;
+  	max-width: 100%;
+  	resize: none;
+  	padding: 30px; 
 }
-
-.textfield-d
-{
-	width: 100%;
-	padding: 15px 30px;
-	font-size: 16px;
-	border: none;
-	border: 1px solid paleturquoise;
-    color: paleturquoise;
-    outline: none !important;
+.textfield-d {
+  	width: 100%;
+  	padding: 15px 30px;
+  	font-size: 16px;
+    border: 0;
+ 	color: $darkgrey;
 }
-
-.textarea-d
-{
+.textarea-d {
 	height: 150px;
 	max-width: 100%;
 	resize: none;
-	padding: 30px;
+	padding: 30px; 
 }
-.textfield-a
-{
-	width: 50%;
-	padding: 5px 10px;
-	font-size: 12px;
-	border: none;
-	border: 1px solid paleturquoise;
-    color: paleturquoise;
-    outline: none !important;
+.textfield-a {
+  width: 50%;
+  padding: 5px 10px;
+  font-size: 1em;
+  border: 0;
+  color: $darkgrey;
 }
-
-.textarea-a
-{
+.textarea-a {
 	height: 25px;
 	max-width: 50%;
 	resize: none;
