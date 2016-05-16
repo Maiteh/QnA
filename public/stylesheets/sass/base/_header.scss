@@ -8,29 +8,36 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
-
 .header,
 .marketing,
 .footer {
-  padding-right: 15px;
-  padding-left: 15px;
+  padding-right: 20px;
+  padding-left: 20px; 
 }
-
 .header {
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 30px;
-  letter-spacing: 1px;
+	background-color: $material-orange-400;
+	margin-bottom: 50px;
 }
-
 .header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  color: $material-pink;
+	margin: 0 auto;
+	line-height: 3em;
+	color: #fff; 
 }
-
+.nav-pills > li {
+	padding:0 5px;
+}
+.nav-pills > li >a:link,
+.nav-pills > li >a:hover,
+.nav-pills > li >a:active,
+.nav-pills > li >a:visited {
+	background-color: $material-orange-400;
+	border-bottom: 2px solid #fff;
+}
+.nav-pills > li > a {
+    border-radius: 0;
+}	
 .header ul li a {
-  color: $dark-blue-gray;
-  font-size: 16px;
+	color: #fff;
+	font-size: 1em;
+	padding-top:1.7em;
 }
