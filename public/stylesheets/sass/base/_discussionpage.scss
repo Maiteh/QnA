@@ -1,35 +1,42 @@
-.back a
-{
-    display: inline-block;
+a.discussion-topic {
+	padding-left:20px;
+}
+.msg-discussion,
+.title-discussion {
+	padding-left:20px;
+}
+.msg-discussion {
+    font-size: 1em;
+    padding-bottom: 20px;
+	color:$darkgrey;
+}
+.wrapper-discussions {
     width: 100%;
-    background-color: $material-pink;
-    font-size: 16px;
-    color: $white;
+    height: 100%;
+    border-bottom: 1px solid $lightgrey;
+}
+.wrapper-discussions:last-child {
+    border: none;
+}
+.wrapper-discussions:hover {
+    background-color: $material-orange-50;
+}
+.wrapper-discussions a {
     text-decoration: none;
-    text-transform: uppercase;
-    text-align: center;
-    letter-spacing: 1px;
-    padding: 10px;
-    border-radius: 1px;
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;
 }
-
-.back a:hover
-{
-    background-color: rgba(233, 30, 99, 0.8);
+a.btn-primary-back { 
+	display:inline-block;
+	text-align: center;
+	width: 100%;
+	background-color: $material-design-300;
+	font-size: 1.2em;
+	color: $white;
+	text-decoration: none;
+	padding: 20px;
 }
-
-.wrap-title-discussion
-{
-    width: 100%;
-    height: auto;
-    margin-top: 25px;
+a.btn-primary-back:hover {
+	background-color: $material-design-500;
 }
-
-.message-discussion
-{
-    font-size: 18px;
-    letter-spacing: 1px;
-    color: $dark-blue-gray;
+.btn-primary {
+	margin-bottom: 20px; 
 }
