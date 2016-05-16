@@ -55,7 +55,7 @@ app.use(session({
 		secret: 'QnA',
 		store: new mongoStore({
 			url: "mongodb://127.0.0.1:27017",
-			collection:"sessions"
+			collection:"qna"
 		})
 }));
 

@@ -9,10 +9,18 @@ var Discussion = require('../models/discussion');
 
 var isAuthenticated = require('../helpers/authenticated');
 
+/**
+* Send to page to create new discussion
+*/
 router.get('/create', isAuthenticated, function (req, res) {
 	res.render('create');
 });
 
+/**
+* Getting the discussion detail page
+* This shows the title, Message, user who started the discussion
+* The questions and the awnsers
+*/
 router.get('/:id', isAuthenticated, function (req, res) {
 	Discussion.findOne({_id: req.params.id})
 		.populate('userId')
@@ -31,6 +39,9 @@ var jsonParser = bodyParser.json();
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+/**
+* Creating a new discussion with the Discussion model
+*/
 var createDiscussion = function(discussion, callback) {
 	var post = new Discussion(discussion);
 

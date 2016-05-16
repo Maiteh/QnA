@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Q&amp;A Discussion platform</title>
     <link rel="stylesheet" href="/stylesheets/css/bootstrap.css" />
-    <link rel="stylesheet" href="/stylesheets/css/style.css" />
+    <link rel="stylesheet" href="/stylesheets/style.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 </head>
@@ -16,7 +16,6 @@
             <nav>
                 <ul class="nav nav-pills pull-right">
                     {{#if user}}
-                        <li role="presentation"><a href="/">Discussions</a></li>
                         <li role="presentation"><a href="/discussions/create">Create a new discussion</a></li>
                         <li role="presentation"><a href="/users/logout">Logout</a></li>
                     {{else}}
@@ -51,6 +50,5 @@
         </footer>
 
     </div>
-    
 </body>
 </html>
