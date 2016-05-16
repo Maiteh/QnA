@@ -48,4 +48,4 @@ When clicking on a discussion you can read the full discussion topic and all te 
 >
 > http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-with-passport--cms-21619
 > http://passportjs.org
-> - 
+> 
