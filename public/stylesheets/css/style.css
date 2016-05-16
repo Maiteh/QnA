@@ -1,9 +1,9 @@
 body {
-  font-family: 'Roboto', sans-serif;
-  padding-top: 20px;
-  padding-bottom: 20px;
+	font-family: 'Roboto', sans-serif;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #fafafa;
 }
-
 @media (min-width: 768px) {
 	.container-fluid {
 	  max-width: 450px; 
@@ -13,25 +13,17 @@ body {
   margin: 0;
   padding: 0; }
 
-.page-header {
-  border: none;
-  margin: 0;
-  padding: 0;
-  margin-bottom: 25px;
-  border-left: 3px solid #E91E63;
-  padding-left: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px; 
+.login {
 }
 .header,
 .marketing,
 .footer {
-  padding-right: 20px;
-  padding-left: 20px; 
+	padding-right: 20px;
+	padding-left: 20px; 
 }
 .header {
-	background-color: #FFB74D;
-	margin-bottom: 50px;
+	background-color:#FF9800;
+	margin-bottom: 0;
 }
 .header h3 {
 	margin: 0 auto;
@@ -45,7 +37,7 @@ body {
 .nav-pills > li >a:hover,
 .nav-pills > li >a:active,
 .nav-pills > li >a:visited {
-	background-color: #FFB74D;
+	background-color:#FF9800;
 	border-bottom: 2px solid #fff;
 }
 .nav-pills > li > a {
@@ -122,9 +114,9 @@ body {
   letter-spacing: 1px;
   color: #37474F; }
 
-.btn-default {
-  margin-bottom: 20px; }
-
+.btn-primary {
+	margin-bottom: 20px; 
+}
 .button {
   background-color: #E91E63;
   text-transform: uppercase;
@@ -177,11 +169,34 @@ body {
   padding: 3px;
   background-color: #E91E63;
   border-radius: 1px; }
-
+form {
+	margin-top:0;
+}
+label.first {
+	margin-top:20px;
+}	
+.form-control {
+	border-radius:0;
+}
+.btn.btn-primary {
+	width:100%;
+	border-radius:0;
+	background-color:#FFB74D;
+	border-color: #FFB74D;
+}
+.btn.btn-primary:link,
+.btn.btn-primary:hover,
+.btn.btn-primary:active,
+.btn.btn-primary:visited {
+	width:100%;
+	border-radius:0;
+	background-color:#FF9800;
+	border-color: #FF9800;
+}
 input {
   display: block;
-  margin-bottom: 20px; }
-
+  margin-bottom: 20px; 
+}
 .textfield {
   width: 100%;
   max-width: 500px;
@@ -235,21 +250,23 @@ h1 {
   margin: 0; }
 
 h2 {
-  font-size: 20px;
-  letter-spacing: 1px;
-  margin: 0;
-  padding-left: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border-left: 3px solid #E91E63;
-  color: #37474F; }
-
+	background-color:#FFB74D;
+	color:#fff;
+	font-size:1.2em;
+	margin-top:0;
+	margin-bottom:0;
+	padding:20px;
+}
 .h1-dis {
   margin-bottom: 25px;
   border-left: 3px solid #E91E63;
   padding-left: 20px;
-  padding-top: 5px; }
-
+  padding-top: 5px;
+}
+footer p {
+	text-align:center;
+	font-size:.9em;
+}
 .title-discussion {
   font-size: 25px;
   font-weight: 500;
