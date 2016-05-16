@@ -6,87 +6,55 @@ var http       = require('http').Server(express);
 var io         = require('socket.io')(http);
 
 var Discussion = require('../models/discussion');
-var Answer     = require('../models/answer');
-var Question   = require('../models/question');
 
+var isAuthenticated = require('../helpers/authenticated');
 
-router.get('/create', ensureAuthenticated, function (req, res) {
+router.get('/create', isAuthenticated, function (req, res) {
 	res.render('create');
 });
 
-router.get('/:id', ensureAuthenticated, function (req, res) {
-    Discussion.count({ '_id': req.params.id }, function (err, count) {
-        if (count === 1) {
-            Discussion.find({ '_id': req.params.id }, function (err, docs) {
-                Question.find({ 'discussionId': docs[0].id }, function (err, docs2, docs3) {
-                    res.render('discussion', {"title": docs[0].title, "message": docs[0].message, "userId": docs[0].userId, "question": docs2, "answer": docs3});
-                });
-            });
-        } else {
-            res.render("404");
-        }
-    });
+router.get('/:id', isAuthenticated, function (req, res) {
+	Discussion.findOne({_id: req.params.id})
+		.populate('userId')
+		.exec(function (err, doc) {
+			console.log('err', err);
+			console.log('doc', doc);
+			if(doc) {
+				res.render('discussion', {"title": doc.title, "message": doc.message, "userId": doc.userId, "data": doc.questions, discussionId: doc._id.toString()});
+			} else {
+				res.render("404");
+			}
+	});
 });
 var jsonParser = bodyParser.json();
 
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-// POST /login gets urlencoded bodies
-router.post('/create', urlencodedParser, function (req, res) {
-	var post = new Discussion({title: req.body.title, message: req.body.message, userId: 1});
+var createDiscussion = function(discussion, callback) {
+	var post = new Discussion(discussion);
 
 	//save model to MongoDB
 	post.save(function (err, room) {
 	    if (err) {
-			return err;
+			callback(err, null);
 	    } else {
-            console.log("A new discussion is opened with id: " + room.id);
-            res.redirect('/discussions/' + room.id);
+			callback(null, '/discussions/' + room.id);
 	    }
 	});
-});
+};
 
-// POST for question
-router.post('/:id', urlencodedParser, function (req, res) {
-    var question = new Question({question: req.body.question, discussionId: req.params.id});
+// POST /login gets urlencoded bodies
+router.post('/create', urlencodedParser, function (req, res) {
+	var discussion = {title: req.body.title, message: req.body.message, userId: req.user._id.toString()};
 
-	//save model to MongoDB
-	question.save(function (err, room) {
-	    if (err) {
+	createDiscussion(discussion, function(err, data) {
+		if (err) {
 			return err;
-	    } else {
-            console.log("A new question is opened with id: " + room.id);
-            res.redirect(req.params.id);
-	    }
+		} else {
+			res.redirect(data);
+		}
 	});
 });
-
-// POST for answers
-router.post('/:id', urlencodedParser, function (req, res) {
-    var answer = new Anwser({answer: req.body.answer, discussionId: req.params.id, questionId: req.params.id});
-
-	//save model to MongoDB
-	answer.save(function (err, room) {
-	    if (err) {
-			return err;
-	    } else {
-            console.log("A new answer is posted with id: " + room.id);
-            res.redirect(req.params.id);
-	    }
-	});
-});
-
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-		return next();
-	} else {
-		//req.flash('error_msg','You are not logged in');
-		res.redirect('/users/login');
-	}
-}
-
-
-
 
 module.exports = router;

@@ -6,20 +6,22 @@
 </div>
 
 <div class="line-gray"></div>
-
-{{#each question}}
+{{#each data}}
     <h2>{{this.question}}</h2>
-    
-    <p>{{this.answer}}</p>
-    <form action="" method="post">
-        <textarea name="anwser" placeholder="Anwser" class="textfield-a textarea-a"></textarea>
-        <input type="submit" value="Anwser" class="button button-a">
+
+    {{#each this.answers}}
+        <p>{{this.answer}}</p>
+    {{/each}}
+    <form action="/answers/{{../discussionId}}" method="post">
+        <input type="hidden" name="questionId" value="{{this._id}}">
+        <textarea name="answer" placeholder="Answer" class="textfield-a textarea-a"></textarea>
+        <input type="submit" value="Answer" class="button button-a">
     </form>
     <div class="line-gray"></div>
 {{/each}}
 
 
-    <form action="" method="post">
+    <form action="/questions/{{discussionId}}" method="post">
         <textarea name="question" placeholder="Question" class="textfield-d textarea-d"></textarea>
         <input type="submit" value="Ask a new Question" class="button">
     </form>
