@@ -6,6 +6,7 @@ body {
 @media (min-width: 768px) {
   .container-fluid {
     max-width: 450px; } }
+
 .line-gray {
   width: 100%;
   height: 1px;
@@ -269,5 +270,3 @@ footer p {
   font-weight: 700;
   color: #FF9800;
   padding-top: 20px; }
-
-/*# sourceMappingURL=style.css.map */

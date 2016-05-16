@@ -19,9 +19,10 @@ gulp.task('start', function () {
 
 // convert sass
 gulp.task('sass', function() {
-    gulp.src('public/stylesheets/sass/*.scss')
+    gulp.src('public/stylesheets/sass/style.scss')
         .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('public/stylesheets/css/'))
+        .pipe(gulp.dest('public/stylesheets/'))
+    .pipe(notify("converted sass to css"));
 });
 
 
@@ -38,12 +39,12 @@ gulp.task('minify-css', function() {
 //Past all css files in to one
 gulp.task('concat', function () {
   return gulp.src('public/stylesheets/css/*.css')
-    .pipe(concatCss("public/stylesheets/style.css"))
+    .pipe(concatCSS("public/stylesheets/style.css"))
     .pipe(gulp.dest('public/stylesheets'));
 });
 
 
 // Default
-gulp.task('default',['nodemon'],function() {
+gulp.task('default',['start'],function() {
     gulp.watch('./public/stylesheets/sass/*.scss',['sass', 'minify-css', 'concat']);
 });
