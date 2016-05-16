@@ -24,19 +24,3 @@ a.discussion-topic {
 .wrapper-discussions a {
     text-decoration: none;
 }
-a.btn-primary-back { 
-	display:inline-block;
-	text-align: center;
-	width: 100%;
-	background-color: $material-design-300;
-	font-size: 1.2em;
-	color: $white;
-	text-decoration: none;
-	padding: 20px;
-}
-a.btn-primary-back:hover {
-	background-color: $material-design-500;
-}
-.btn-primary {
-	margin-bottom: 20px; 
-}
