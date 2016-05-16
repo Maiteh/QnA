@@ -6,8 +6,8 @@ body {
 }
 @media (min-width: 768px) {
 	.container-fluid {
-	  max-width: 450px; 
-	} 
+	  	max-width: 500px;
+	}	
 }
 .header,
 .marketing,
@@ -85,65 +85,13 @@ a.btn-primary-back{
 	padding: 20px;
 }
 a.btn-primary-back:hover {
-  background-color: #FF9800;
+	background-color: #FF9800;
 }
 .btn-primary {
 	margin-bottom: 20px; 
 }
-.button {
-  background-color: #E91E63;
-  text-transform: uppercase;
-  font-family: 'Roboto', sans-serif;
-  font-weight: 400;
-  text-align: center;
-  min-width: 200px;
-  padding: 15px 40px;
-  color: white;
-  box-shadow: none;
-  border: none;
-  font-size: 0.8em;
-  margin-top: 30px;
-  -webkit-transition: background-color 0.2s linear, box-shadow 0.4s 0.2s linear; }
-
-.button:hover {
-  cursor: pointer;
-  -webkit-box-shadow: 0px 0px 25px -9px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 0px 25px -9px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 0px 25px -9px rgba(0, 0, 0, 0.75);
-  -webkit-transition: background-color 0.2s linear, box-shadow 0.4s 0.2s linear; }
-
-.btn-ask-question {
-  width: 220px;
-  height: auto;
-  color: #fff;
-  font-size: 16px;
-  text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 1px;
-  padding: 10px;
-  background-color: #E91E63;
-  border-radius: 1px;
-  margin-bottom: 25px;
-  cursor: pointer;
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out; }
-
-.btn-ask-question:hover {
-  background-color: rgba(233, 30, 99, 0.8); }
-
-.button-a {
-  width: 70px;
-  height: auto;
-  color: #fff;
-  font-size: 14px;
-  text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 1px;
-  padding: 3px;
-  background-color: #E91E63;
-  border-radius: 1px; }
 form {
-	margin-top:0;
+	margin-top:10px;
 }
 label.first {
 	margin-top:20px;
@@ -156,6 +104,7 @@ label.first {
 	border-radius:0;
 	background-color:#FFB74D;
 	border-color: #FFB74D;
+	margin-top:10px;
 }
 .btn.btn-primary:link,
 .btn.btn-primary:hover,
