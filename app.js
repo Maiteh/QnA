@@ -7,11 +7,15 @@ var bodyParser       = require('body-parser');
 var handlebars       = require('express-handlebars');
 var expressValidator = require('express-validator');
 var flash            = require('connect-flash');
-var expressSession   = require('express-session');
+var session          = require('express-session');
 var passport         = require('passport');
 var LocalStrategy    = require('passport-local').Strategy;
 var mongo            = require('mongodb');
 var mongoose         = require('mongoose');
+var mongoStore       = require('connect-mongo')({
+	session: session
+});
+var config           = require('config');
 
 var app              = express();
 
@@ -34,15 +38,25 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 /**
-* Configuring Passport
-* Passport just provides the mechanism to handle authentication
-* leaving the onus of implementing session-handling ourselves
-* and for that we will be using express-session
+* Save login in session
+* so that it's not nessecary to login every time the server 
+* restarts.
 */
-app.use(expressSession({
+app.use(session({
     secret: 'QnA',
-    saveUninitialized: true,
-    resave: true
+    saveUninitialized: false,
+    resave: true,
+    cookie: {
+			secure: false,
+			httpOnly: false,
+            maxAge: 1000 * 60 * 60 * 24 * 7
+    },
+    name: 'QnA',
+		secret: 'QnA',
+		store: new mongoStore({
+			url: "mongodb://127.0.0.1:27017",
+			collection:"sessions"
+		})
 }));
 
 // Passport init
