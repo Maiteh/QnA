@@ -12,7 +12,7 @@ download the developement branch and install the modules with
 >npm install
 
 Then you can run the app with
-> node index.js
+> node app.js
 
 The app will be running on *localhost:3000*.
 
@@ -20,7 +20,8 @@ The app will be running on *localhost:3000*.
 ###  What do we have so far
 When surfing to localhost:3000 you'll get a login page with the option to create an account. 
 When the account is created you will be redirected to the login page again and you van login now.
-When logged in you'll see a page that displays your information.
+When logged in you'll see a page that list all the discussions. In the head navigation you'll see an option to create a new one or log out.
+When clicking on a discussion you can read the full discussion topic and all te posted questions or ask a new one.
 
 >**Todo**
 
@@ -47,4 +48,4 @@ When logged in you'll see a page that displays your information.
 >
 > http://code.tutsplus.com/tutorials/authenticating-nodejs-applications-with-passport--cms-21619
 > http://passportjs.org
-> - 
+> 
