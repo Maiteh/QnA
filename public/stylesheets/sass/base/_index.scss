@@ -1,0 +1,20 @@
+.msg-discussion {
+    font-size: 1em;
+    padding-bottom: 20px;
+	color: $darkgrey;
+}
+.wrapper-discussions {
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid $lightgrey;
+}
+.wrapper-discussions:last-child {
+    border: none;
+}
+.wrapper-discussions:hover {
+    background-color: #FFF3E0;
+}
+
+.wrapper-discussions a {
+    text-decoration: none;
+}

@@ -1,0 +1,13 @@
+<h1 class="h1-dis">Discussions</h1>
+  
+<div class="line-gray dis"></div>
+
+{{#each data}}
+    <div class="wrap-each-discussion">
+        <a href="discussions/{{this.id}}">
+            <div class="title-discussion">{{this.title}}</div>
+            <div class="mes-dis">{{this.message}}</div>
+            <div class="mes-dis">{{this.username}}</div>
+        </a>
+    </div>
+{{/each}}

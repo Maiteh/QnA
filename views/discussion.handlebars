@@ -1,0 +1,28 @@
+<div class="back"><a href="/">Back to discussions</a></div>
+
+<div class="wrap-title-discussion">
+    <h1>{{title}}</h1>
+    <p> By {{userId.username}}</p>
+    <div class="message-discussion">{{message}}</div>
+</div>
+
+<div class="line-gray"></div>
+{{#each data}}
+    <h2>{{this.question}}</h2>
+
+    {{#each this.answers}}
+        <p>{{this.answer}}</p>
+    {{/each}}
+    <form action="/answers/{{../discussionId}}" method="post">
+        <input type="hidden" name="questionId" value="{{this._id}}">
+        <textarea name="answer" placeholder="Answer" class="textfield-a textarea-a"></textarea>
+        <input type="submit" value="Answer" class="button button-a">
+    </form>
+    <div class="line-gray"></div>
+{{/each}}
+
+
+    <form action="/questions/{{discussionId}}" method="post">
+        <textarea name="question" placeholder="Question" class="textfield-d textarea-d"></textarea>
+        <input type="submit" value="Ask a new Question" class="button">
+    </form>
