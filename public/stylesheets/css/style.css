@@ -9,9 +9,6 @@ body {
 	  max-width: 450px; 
 	} 
 }
-.dis {
-  margin: 0;
-  padding: 0; }
 .header,
 .marketing,
 .footer {
@@ -47,42 +44,35 @@ header.header h3 {
 }
 .footer {
   margin-top: 0;
-  padding-top: 19px;
-  color: #37474F;
+  padding-top: 20px;
   border-top: 1px solid #e5e5e5;
-  letter-spacing: 1px; }
-
-.mes-dis {
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 1px;
-  color: #37474F;
-  padding-bottom: 15px; }
-
-.wrap-each-discussion {
-  width: 100%;
-  height: 100%;
-  border-bottom: 1px solid #e5e5e5; }
-
-.wrap-each-discussion:last-child {
-  border: none; }
-
-.wrap-each-discussion:hover {
-  background-color: #e5e5e5; }
-
-.wrap-each-discussion,
-.title-discussion,
-.mes-dis {
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out; }
-
-.wrap-each-discussion:hover .title-discussion,
-.wrap-each-discussion:hover .mes-dis {
-  padding-left: 10px; }
-
-.wrap-each-discussion a {
-  text-decoration: none; }
-
+}
+a.discussion-topic {
+	padding-left:20px;
+}
+.msg-discussion,
+.title-discussion {
+	padding-left:20px;
+}
+.msg-discussion {
+    font-size: 1em;
+    padding-bottom: 20px;
+	color:#333;
+}
+.wrapper-discussions {
+    width: 100%;
+    height: 100%;
+    border-bottom: 1px solid $lightgrey;
+}
+.wrapper-discussions:last-child {
+    border: none;
+}
+.wrapper-discussions:hover {
+    background-color: #FFF3E0;
+}
+.wrapper-discussions a {
+    text-decoration: none;
+}
 .back a {
   display: inline-block;
   width: 100%;
@@ -100,16 +90,6 @@ header.header h3 {
 
 .back a:hover {
   background-color: rgba(233, 30, 99, 0.8); }
-
-.wrap-title-discussion {
-  width: 100%;
-  height: auto;
-  margin-top: 25px; }
-
-.message-discussion {
-  font-size: 18px;
-  letter-spacing: 1px;
-  color: #37474F; }
 
 .btn-primary {
 	margin-bottom: 20px; 
@@ -254,21 +234,14 @@ h2 {
 	margin-bottom:0;
 	padding:20px;
 }
-.h1-dis {
-  margin-bottom: 25px;
-  border-left: 3px solid #E91E63;
-  padding-left: 20px;
-  padding-top: 5px;
-}
 footer p {
 	text-align:center;
 	font-size:.9em;
 }
 .title-discussion {
-  font-size: 25px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  color: #37474F;
-  padding-top: 15px; }
-
+	font-size: 1.5em;
+	font-weight: 700;
+	color:#FF9800;
+	padding-top: 20px; 
+}
 /*# sourceMappingURL=style.css.map */

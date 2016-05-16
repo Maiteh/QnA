@@ -14,22 +14,13 @@ h2 {
 	margin-bottom:0;
 	padding:20px;
 }
-.h1-dis
-{
-    margin-bottom: 25px;
-    border-left: 3px solid $material-pink;
-    padding-left: 20px;
-    padding-top: 5px;
-}
-.title-discussion
-{
-    font-size: 25px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    color: $dark-blue-gray;
-    padding-top: 15px;
-}
 footer p {
 	text-align:center;
 	font-size:.9em;
+}
+.title-discussion {
+	font-size: 1.5em;
+	font-weight: 700;
+	color:$material-orange-500;
+	padding-top: 20px; 
 }

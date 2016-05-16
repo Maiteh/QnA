@@ -1,13 +1,11 @@
-<h1 class="h1-dis">Discussions</h1>
-  
-<div class="line-gray dis"></div>
+<h2 class="discussions">Discussions</h2>
 
 {{#each data}}
-    <div class="wrap-each-discussion">
+    <div class="wrapper-discussions">
         <a href="discussions/{{this.id}}">
             <div class="title-discussion">{{this.title}}</div>
-            <div class="mes-dis">{{this.message}}</div>
-            <div class="mes-dis">{{this.username}}</div>
+            <div class="msg-discussion">{{this.message}}</div>
+            <div class="msg-discussion-user">{{this.username}}</div>
         </a>
     </div>
 {{/each}}
