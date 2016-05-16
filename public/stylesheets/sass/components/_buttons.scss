@@ -1,7 +1,21 @@
+.btn.btn-primary {
+	width:100%;
+	border-radius:0;
+	background-color:$material-orange-300;
+	border-color: $material-orange-300;
+}
+.btn.btn-primary:link,
+.btn.btn-primary:hover,
+.btn.btn-primary:active,
+.btn.btn-primary:visited {
+	width:100%;
+	border-radius:0;
+	background-color: $material-orange-500;
+	border-color: $material-orange-500;
+}
 .btn-default{
     margin-bottom: 20px;
 }
-
 .button
 {
 	background-color: $material-pink;

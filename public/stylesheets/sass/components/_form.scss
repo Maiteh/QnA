@@ -1,4 +1,12 @@
-input
+form {
+	margin-top:0;
+}
+label.first {
+	margin-top:20px;
+}	
+.form-control {
+	border-radius:0;
+}input
 {
 	display: block;
 	margin-bottom: 20px;
