@@ -10,7 +10,7 @@
     <h3 class="question">{{this.question}}</h3>
     
     {{#each this.answers}}
-        <p>{{this.answer}}</p>
+        <p class="p-answer">{{this.answer}}</p>
     {{/each}}
 
     <form action="/answers/{{../discussionId}}" method="post" class="form-answer">

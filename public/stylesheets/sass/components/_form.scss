@@ -31,10 +31,12 @@ input {
 /** Answer **/
 .form-answer{
     display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 }
 .textarea-a {
-	height: 30px;
-	width: 50%;
+	height: 35px;
+	width: 75%;
 	resize: none;
     padding: 5px 20px 5px 20px;
     font-size: 1em;

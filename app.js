@@ -97,14 +97,18 @@ app.use(function (req, res, next) {
 var routes      = require('./routes/index');
 var users       =  require('./routes/users');
 var discussions = require('./routes/discussions');
-var questions = require('./routes/questions');
-var answers = require('./routes/answers');
+var questions   = require('./routes/questions');
+var answers     = require('./routes/answers');
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/discussions', discussions);
 app.use('/questions', questions);
 app.use('/answers', answers);
+
+
+
+
 
 http.listen(3000, function () {
     console.log('listening on port 3000');

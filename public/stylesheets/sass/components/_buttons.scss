@@ -2,12 +2,12 @@ a.btn-primary-back {
 	text-align: center;
 	display: inline-block;
 	width: 100%;
-	background-color: $mustard;
+	background-color: $light-blue;
 	font-size: 1.2em;
 	color: #fff;
 	text-decoration: none;
 	padding: 20px;
-    color:$darkgrey;
+    color:$deep-blue;
 }
 a.btn-primary-back:hover {
 	background-color: $deep-blue;
@@ -35,12 +35,11 @@ a.btn-primary-back:hover {
 }
 
 .btn-answer{
-    width: 50%;
-    margin-top: 0px;
+    width: 20%;
     height: 30px;
     background-color: $mustard;
     color: $darkgrey;
     &:hover{
-        width: 50%;
+        width: 20%;
     }
 }
