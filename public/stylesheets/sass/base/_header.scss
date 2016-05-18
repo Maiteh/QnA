@@ -1,27 +1,17 @@
-.page-header{
-    border: none;
-    margin: 0;
-    padding: 0;
-    margin-bottom: 25px;
-    border-left: 3px solid;
-    padding-left: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
 .header,
 .marketing,
 .footer {
-  padding-right: 20px;
-  padding-left: 20px; 
+	padding-right: 20px;
+	padding-left: 20px; 
 }
-.header {
-	background-color: $material-orange-500;
-	margin-bottom: 50px;
+header.header {
+	background-color:$material-orange-500;
+	margin-bottom: 0;
 }
-.header h3 {
+header.header h3 {
 	margin: 0 auto;
 	line-height: 3em;
-	color: $white;
+	color: $white; 
 }
 .nav-pills > li {
 	padding:0 5px;
@@ -36,7 +26,7 @@
 .nav-pills > li > a {
     border-radius: 0;
 }	
-.header ul li a {
+header.header ul li a {
 	color: $white;
 	font-size: 1em;
 	padding-top:1.7em;
