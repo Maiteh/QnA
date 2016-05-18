@@ -19,8 +19,6 @@ h3.question{
     padding: 10px;
     font-size:1.2em;
 }
-
-
 a h3.title-discussions{
     color: $deep-blue;
 }
@@ -32,6 +30,7 @@ h2.title-discussion {
 	font-weight: 700;
 	color:$darkgrey;
 	padding-top: 20px; 
+    width: 100%;
 
 }
 p.user-discussion{

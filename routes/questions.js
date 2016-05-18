@@ -5,8 +5,7 @@ var bodyParser = require('body-parser');
 var http       = require('http').Server(express);
 var io         = require('socket.io')(http);
 
-var Discussion = require('../models/discussion');
-
+var Discussion      = require('../models/discussion');
 var isAuthenticated = require('../helpers/authenticated');
 
 // create application/x-www-form-urlencoded parser
@@ -18,12 +17,12 @@ router.post('/:id', urlencodedParser, function (req, res) {
 		question: req.body.question
 	};
 	Discussion.update({_id: req.params.id}, {$push: {questions: question}})
-		.exec(function(err, update) {
+		.exec(function (err, update) {
 			if (err) {
 				return err;
 			} else {
 				Discussion.findOne({_id: req.params.id})
-					.exec(function(err, discussion) {
+					.exec(function (err, discussion) {
 						if (err) {
 							return err;
 						} else {
@@ -32,17 +31,6 @@ router.post('/:id', urlencodedParser, function (req, res) {
 					});
 			}
 		});
-    // var question = new Question({question: req.body.question, discussionId: req.params.id});
-
-	//save model to MongoDB
-	// question.save(function (err, room) {
-	//     if (err) {
-	// 		return err;
-	//     } else {
-    //         console.log("A new question is opened with id: " + room.id);
-    //         res.redirect(req.params.id);
-	//     }
-	// });
 });
 
 module.exports = router;

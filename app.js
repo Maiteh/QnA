@@ -16,13 +16,14 @@ var mongoStore       = require('connect-mongo')({
 	session: session
 });
 var config           = require('config');
-
 var app              = express();
-
 var http             = require('http').Server(app);
 var io               = require('socket.io')(http);
 
+//var geo              = require('/helpers/geo');
+
 mongoose.connect('mongodb://localhost/qna');
+
 
 app.use(express.static(__dirname + '/public'));
 
@@ -105,9 +106,6 @@ app.use('/users', users);
 app.use('/discussions', discussions);
 app.use('/questions', questions);
 app.use('/answers', answers);
-
-
-
 
 
 http.listen(3000, function () {

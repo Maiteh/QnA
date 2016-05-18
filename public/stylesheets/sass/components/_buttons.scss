@@ -36,9 +36,10 @@ a.btn-primary-back:hover {
 
 .btn-answer{
     width: 20%;
-    height: 30px;
+    height: 35px;
     background-color: $mustard;
     color: $darkgrey;
+    margin: 0;
     &:hover{
         width: 20%;
     }

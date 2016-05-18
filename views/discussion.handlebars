@@ -4,6 +4,7 @@
     <h2 class="title-discussion">{{title}}</h2>
     <p class="msg-discussion">{{message}}</p>
     <p class="user-discussion">By {{userId.username}}</p>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//localhost%3A3000/discussions/{{discussionId}}">Share on Facebook</a>
 </div>
 
 {{#each data}}
@@ -16,7 +17,7 @@
     <form action="/answers/{{../discussionId}}" method="post" class="form-answer">
         <input type="hidden" name="questionId" value="{{this._id}}">
         <textarea name="answer" placeholder="Answer" class="textarea-a"></textarea>
-        <button type="submit" value="Answer" class="btn btn-primary btn-answer">Answer</button>
+        <button type="submit" value="Answer" class="btn btn-answer">Answer</button>
     </form>
 {{/each}}
 

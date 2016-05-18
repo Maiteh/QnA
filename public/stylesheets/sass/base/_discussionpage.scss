@@ -6,18 +6,10 @@
     font-size: 1em;
     padding-bottom: 20px;
 	color:$darkgrey;
+    width: 100%
 }
-.wrapper-discussions {
-    width: 100%;
-    height: 100%;
-    border-bottom: 1px solid $lightgrey;
-}
-.wrapper-discussions:last-child {
-    border: none;
-}
-.wrapper-discussions:hover {
-    background-color: $mustard;
-}
-.wrapper-discussions a {
-    text-decoration: none;
+.wrap-discussion-topic{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }

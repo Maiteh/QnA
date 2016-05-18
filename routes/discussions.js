@@ -5,8 +5,7 @@ var bodyParser = require('body-parser');
 var http       = require('http').Server(express);
 var io         = require('socket.io')(http);
 
-var Discussion = require('../models/discussion');
-
+var Discussion      = require('../models/discussion');
 var isAuthenticated = require('../helpers/authenticated');
 
 /**
