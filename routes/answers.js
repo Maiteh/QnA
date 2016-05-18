@@ -10,23 +10,33 @@ var Discussion = require('../models/discussion');
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
+var createAnswer = function(discussionId, questionId, answer, callback) {
+	Discussion.update({_id: discussionId, "questions._id": questionId}, {$push: {'questions.$.answers': answer}})
+		.exec(function(err, update) {
+			Discussion.findOne({_id: discussionId})
+				.exec(function(err, discussion) {
+					if (err) {
+						callback(err, null);
+					} else {
+						callback(null, '/discussions/' + discussionId);
+					}
+				});
+		});
+};
+
 // POST for answers
 router.post('/:id', urlencodedParser, function (req, res) {
 	var answer = {
 		answer: req.body.answer
 	};
-
-	Discussion.update({_id: req.params.id, "questions._id": req.body.questionId}, {$push: {'questions.$.answers': answer}})
-		.exec(function(err, update) {
-			Discussion.findOne({_id: req.params.id})
-				.exec(function(err, discussion) {
-					if (err) {
-						return err;
-					} else {
-						res.redirect('/discussions/' + req.params.id);
-					}
-				});
-		});
+	
+	createAnswer(req.params.id, req.body.questionId, answer, function(err, data) {
+		if (err) {
+			return err;
+		} else {
+			res.redirect(data);
+		}
+	});
 });
 
 module.exports = router;

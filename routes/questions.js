@@ -11,26 +11,35 @@ var isAuthenticated = require('../helpers/authenticated');
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
-// POST for question
+var createQuestion = function(discussionId, question, callback) {
+	Discussion.update({_id: discussionId}, {$push: {questions: question}})
+		.exec(function(err, update) {
+			Discussion.findOne({_id: discussionId})
+				.exec(function(err, discussion) {
+					if (err) {
+						callback(err, null);
+					} else {
+						callback(null, '/discussions/' + discussionId);
+					}
+				});
+		});
+};
+
+// POST for answers
 router.post('/:id', urlencodedParser, function (req, res) {
-	var question =  {
+	var question = {
 		question: req.body.question
 	};
-	Discussion.update({_id: req.params.id}, {$push: {questions: question}})
-		.exec(function (err, update) {
-			if (err) {
-				return err;
-			} else {
-				Discussion.findOne({_id: req.params.id})
-					.exec(function (err, discussion) {
-						if (err) {
-							return err;
-						} else {
-							res.redirect('/discussions/' + req.params.id);
-						}
-					});
-			}
-		});
+	
+	createQuestion(req.params.id, question, function(err, data) {
+		if (err) {
+			return err;
+		} else {
+			res.redirect(data);
+		}
+	});
 });
 
 module.exports = router;
+
+
