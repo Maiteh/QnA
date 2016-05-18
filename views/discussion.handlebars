@@ -6,17 +6,22 @@
     <p>By {{userId.username}}</p>
 </div>
 
-{{#each question}}
+{{#each data}}
     <h2>{{this.question}}</h2>
     
-    <p>{{this.answer}}</p>
-    <form action="" method="post">
+    {{#each this.answers}}
+        <p>{{this.answer}}</p>
+    {{/each}}
+
+    <form action="/answers/{{../discussionId}}" method="post">
+        <input type="hidden" name="questionId" value="{{this._id}}">
         <textarea name="answer" placeholder="Answer" class="textfield-a textarea-a"></textarea>
         <button type="submit" value="Answer" class="btn btn-primary">Answer</button>
     </form>
 {{/each}}
 
-    <form action="" method="post">
+        
+        <form action="/questions/{{discussionId}}" method="post">
         <textarea name="question" placeholder="Question" class="textfield-d textarea-d"></textarea>
         <button type="submit" value="Ask a new question" class="btn btn-primary">Ask a new question</button>
-    </form>
+         </form>
