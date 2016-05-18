@@ -1,27 +1,27 @@
 <a href="/" class="btn-primary-back">Back to discussions</a>
 
-<div class="wrap-title-discussion">
-    <div class="title-discussion">{{title}}</div>
-    <div class="msg-discussion">{{message}}</div>
-    <p>By {{userId.username}}</p>
+<div class="wrap-discussion-topic">
+    <h2 class="title-discussion">{{title}}</h2>
+    <p class="msg-discussion">{{message}}</p>
+    <p class="user-discussion">By {{userId.username}}</p>
 </div>
 
 {{#each data}}
-    <h2>{{this.question}}</h2>
+    <h3 class="question">{{this.question}}</h3>
     
     {{#each this.answers}}
         <p>{{this.answer}}</p>
     {{/each}}
 
-    <form action="/answers/{{../discussionId}}" method="post">
+    <form action="/answers/{{../discussionId}}" method="post" class="form-answer">
         <input type="hidden" name="questionId" value="{{this._id}}">
-        <textarea name="answer" placeholder="Answer" class="textfield-a textarea-a"></textarea>
-        <button type="submit" value="Answer" class="btn btn-primary">Answer</button>
+        <textarea name="answer" placeholder="Answer" class="textarea-a"></textarea>
+        <button type="submit" value="Answer" class="btn btn-primary btn-answer">Answer</button>
     </form>
 {{/each}}
 
         
         <form action="/questions/{{discussionId}}" method="post">
-        <textarea name="question" placeholder="Question" class="textfield-d textarea-d"></textarea>
+        <textarea name="question" placeholder="Question" class="textarea-q"></textarea>
         <button type="submit" value="Ask a new question" class="btn btn-primary">Ask a new question</button>
          </form>

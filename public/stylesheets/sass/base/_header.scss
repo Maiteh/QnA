@@ -1,11 +1,10 @@
 .header,
-.marketing,
 .footer {
 	padding-right: 20px;
 	padding-left: 20px; 
 }
 header.header {
-	background-color:$material-orange-500;
+	background-color:$deep-blue;
 	margin-bottom: 0;
 }
 header.header h3 {
@@ -20,14 +19,14 @@ header.header h3 {
 .nav-pills > li >a:hover,
 .nav-pills > li >a:active,
 .nav-pills > li >a:visited {
-	background-color: $material-orange-300;
+	background-color: $light-blue;
 	border-bottom: 2px solid $white;
 }
 .nav-pills > li > a {
     border-radius: 0;
 }	
 header.header ul li a {
-	color: $white;
+	color: $deep-blue;
 	font-size: 1em;
 	padding-top:1.7em;
 }

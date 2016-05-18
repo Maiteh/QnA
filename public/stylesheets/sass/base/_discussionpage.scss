@@ -1,8 +1,5 @@
-a.discussion-topic {
-	padding-left:20px;
-}
 .msg-discussion,
-.title-discussion {
+.title-discussions {
 	padding-left:20px;
 }
 .msg-discussion {
@@ -19,7 +16,7 @@ a.discussion-topic {
     border: none;
 }
 .wrapper-discussions:hover {
-    background-color: $material-orange-50;
+    background-color: $mustard;
 }
 .wrapper-discussions a {
     text-decoration: none;

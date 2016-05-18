@@ -2,31 +2,45 @@ a.btn-primary-back {
 	text-align: center;
 	display: inline-block;
 	width: 100%;
-	background-color: $material-orange-300;
+	background-color: $mustard;
 	font-size: 1.2em;
 	color: #fff;
 	text-decoration: none;
 	padding: 20px;
+    color:$darkgrey;
 }
 a.btn-primary-back:hover {
-	background-color: $material-orange-500;
+	background-color: $deep-blue;
+    color: $light-blue;
 }
 .btn-primary {
 	margin-bottom: 20px; 
 }
-.btn.btn-primary {
+.btn {
 	width:100%;
 	border-radius:0;
-	background-color:$material-orange-300;
-	border-color: $material-orange-300;
+	background-color:$light-blue;
+	border-color: $light-blue;
 	margin-top:10px;
+    color:$deep-blue;
 }
-.btn.btn-primary:link,
-.btn.btn-primary:hover,
-.btn.btn-primary:active,
-.btn.btn-primary:visited {
+.btn:link,
+.btn:hover,
+.btn:active,
+.btn:visited {
 	width:100%;
 	border-radius:0;
-	background-color:$material-orange-500;
-	border-color:$material-orange-500;
+	background-color:$deep-blue;
+	border-color:$deep-blue;
+}
+
+.btn-answer{
+    width: 50%;
+    margin-top: 0px;
+    height: 30px;
+    background-color: $mustard;
+    color: $darkgrey;
+    &:hover{
+        width: 50%;
+    }
 }

@@ -1,9 +1,15 @@
-var gulp        = require('gulp');
-var cleanCSS    = require('gulp-clean-css');
-var concatCSS   = require('gulp-concat-css');
-var nodemon     = require('gulp-nodemon');
-var notify      = require('gulp-notify');
-var sass        = require('gulp-sass');
+var gulp         = require('gulp');
+var sass         = require('gulp-sass');
+var sassGlob     = require('gulp-sass-glob');
+var sourcemaps   = require('gulp-sourcemaps');
+var autoprefixer = require('gulp-autoprefixer');
+var importer     = require('node-sass-globbing');
+var plumber      = require('gulp-plumber');
+var cssmin       = require('gulp-cssmin');
+var browserSync  = require('browser-sync').create();
+var notify       = require("gulp-notify");
+var shell        = require('gulp-shell');;
+var nodemon      = require('gulp-nodemon');
 
 // nodemon
 gulp.task('start', function () {
@@ -14,37 +20,52 @@ gulp.task('start', function () {
         'NODE_ENV': 'development' 
     }
   })
-  .pipe(notify("App started successfully"));
+});
+var sass_config = {
+  importer: importer,
+  includePaths: [
+    'node_modules/breakpoint-sass/stylesheets/',
+    'node_modules/singularitygs/stylesheets/',
+    'node_modules/compass-mixins/lib/'
+  ]
+};
+gulp.task('sass', function () {
+  gulp.src('public/stylesheets/sass/**/*.scss')
+  
+    .pipe(sassGlob())
+    .pipe(sass({
+        style: 'compressed',
+        errLogToConsole: false,
+        onError: function(err) {
+            return notify().write(err);
+        }
+    }))
+    //.pipe(sourcemaps.init())
+    .pipe(sass(sass_config).on('error', sass.logError))
+    .pipe(autoprefixer({
+      browsers: ['last 2 version']
+    
+    }))
+    //.pipe(sourcemaps.write('.'))
+    .pipe(cssmin())
+    .pipe(gulp.dest('./public/stylesheets/css'))
+    .pipe(notify({message:'Style is up to date ! ', onLast: true}));
 });
 
-// convert sass
-gulp.task('sass', function() {
-    gulp.src('public/stylesheets/sass/style.scss')
-        .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest('public/stylesheets/'))
-    .pipe(notify("converted sass to css"));
+
+gulp.task('watch', function () {
+  gulp.watch('public/stylesheets/sass/**/*.scss', ['sass']);
+  gulp.watch('public/js/*.js', ['js'])
 });
 
-
-// Minify css for preformance
-gulp.task('minify-css', function() {
-    return gulp.src('public/stylesheets/css/*.css')
-        // Merge all the css files to one file.
-        .pipe(concatCSS('public/stylesheets/style.css'))
-        // Minify css
-        .pipe(cleanCSS({compatibility: 'ie8'}))
-     .pipe(gulp.dest('public/stylesheets'));
-});
 
 //Past all css files in to one
 gulp.task('concat', function () {
   return gulp.src('public/stylesheets/css/*.css')
-    .pipe(concatCSS("public/stylesheets/style.css"))
+    .pipe(concatCSS("public/stylesheets/css/*.css"))
     .pipe(gulp.dest('public/stylesheets'));
 });
 
 
 // Default
-gulp.task('default',['start'],function() {
-    gulp.watch('./public/stylesheets/sass/*.scss',['sass', 'minify-css', 'concat']);
-});
+gulp.task('default', ['start','sass', 'watch']);

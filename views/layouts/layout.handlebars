@@ -10,21 +10,21 @@
 </head>
 <body>
     
-    <div class="container-fluid">
+    <div id="container">
        
         <header class="header clearfix">
             <nav>
                 <ul class="nav nav-pills pull-right">
                     {{#if user}}
-                        <li role="presentation"><a href="/discussions/create">Create a new discussion</a></li>
-                        <li role="presentation"><a href="/users/logout">Logout</a></li>
+                        <li><a href="/discussions/create">Create a new discussion</a></li>
+                        <li><a href="/users/logout">Logout</a></li>
                     {{else}}
-                        <li role="presentation"><a href="/users/login">Log in</a></li>
+                        <li><a href="/users/login">Log in</a></li>
                         <li role="presentation"><a href="/users/register">Sign up</a></li>
                     {{/if}}
                 </ul>
             </nav>
-            <h3 class="text-muted">Q&amp;A App</h3>
+            <h1><a href="/">Q&amp;A App</a></h1>
 		</header>
 
         <div class="row">
