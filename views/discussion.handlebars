@@ -1,10 +1,11 @@
-<a href="/" class="btn-primary-back">Back to discussions</a>
+<a href="/" class="btn-primary-back">Terug naar alle discussies</a>
 
 <div class="wrap-discussion-topic">
     <h2 class="title-discussion">{{title}}</h2>
     <p class="msg-discussion">{{message}}</p>
     <p class="user-discussion">By {{userId.username}}</p>
-    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//localhost%3A3000/discussions/{{discussionId}}">Share on Facebook</a>
+    <p id="active"></p>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//localhost%3A3000/discussions/{{discussionId}}">Deel op Facebook</a>
 </div>
 
 {{#each data}}
@@ -17,20 +18,29 @@
 
     <form action="/answers/{{../discussionId}}" method="post" class="form-answer">
         <input type="hidden" name="questionId" value="{{this._id}}" id="questionId">
-        <textarea name="answer" placeholder="Answer" class="textarea-a"></textarea>
-        <button type="submit" value="Answer" class="btn btn-answer">Answer</button>
+        <textarea name="answer" placeholder="Antwoord" class="textarea-a"></textarea>
+        <button type="submit" value="Answer" class="btn btn-answer">Antwoord</button>
     </form>
 {{/each}}
 <div class="questions"></div>
 
         
         <form action="/questions/{{discussionId}}" method="post" class="form-question">
-        <textarea name="question" placeholder="Question" class="textarea-q"></textarea>
-        <button type="submit" value="Ask a new question" class="btn btn-primary">Ask a new question</button>
+        <textarea name="question" placeholder="Vraag" class="textarea-q"></textarea>
+        <button type="submit" value="Ask a new question" class="btn btn-primary">Stel een vraag</button>
          </form>
 <script src="/socket.io/socket.io.js"></script>
 <script>
 var socket = io();
+    
+socket.on('Active users', function (data) {
+  var activeUsers = $('#active');
+  if (data.activeUsers == 1) {
+    activeUsers.html(data.activeUsers + " Gebruiker is actief in deze discussie");
+  } else {
+    activeUsers.html(data.activeUsers + " Gebruikers zijn actief in deze discussie");
+  }
+});
     
 socket.on('newQuestion', function(data) {
 // Add question

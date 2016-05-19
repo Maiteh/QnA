@@ -20,6 +20,7 @@ var app              = express();
 var http             = require('http').Server(app);
 var io               = require('socket.io')(http);
 
+
 //var geo              = require('/helpers/geo');
 
 mongoose.connect('mongodb://localhost/qna');
@@ -106,15 +107,26 @@ app.use('/discussions', discussions);
 app.use('/questions', questions);
 app.use('/answers', answers);
 
+
+
+var activeUsers      = 0;
 // Listen for connections
 io.on('connection', function(socket) {
 	console.log('User with socket id ' + socket.id + ' connected.');
-
 	// Tell the socket which room he belongs to
 	socket.on('discussion', function(discussionId){
         //console.log('discussionId',discussionId);
         socket.join(discussionId);
+        activeUsers++;
+        console.log('active users in discussion', activeUsers)
+        io.sockets.emit('Active users', { activeUsers : activeUsers });
+        //console.log('active users in discussion', activeUsers);
+        socket.on('disconnect', function() {
+          activeUsers--;
+          io.sockets.emit('Active users', { activeUsers : activeUsers });
+	    });
     });
+
 
     // Listen for new Questions
 	socket.on('newQuestion', function(question) {
