@@ -9,20 +9,89 @@
 
 {{#each data}}
     <h3 class="question">{{this.question}}</h3>
-    
+    <ul id="answerlist">
     {{#each this.answers}}
-        <p class="p-answer">{{this.answer}}</p>
+        <li>{{this.answer}}</li>
     {{/each}}
+    </ul>
 
     <form action="/answers/{{../discussionId}}" method="post" class="form-answer">
-        <input type="hidden" name="questionId" value="{{this._id}}">
+        <input type="hidden" name="questionId" value="{{this._id}}" id="questionId">
         <textarea name="answer" placeholder="Answer" class="textarea-a"></textarea>
         <button type="submit" value="Answer" class="btn btn-answer">Answer</button>
     </form>
 {{/each}}
+<div class="questions"></div>
 
         
-        <form action="/questions/{{discussionId}}" method="post">
+        <form action="/questions/{{discussionId}}" method="post" class="form-question">
         <textarea name="question" placeholder="Question" class="textarea-q"></textarea>
         <button type="submit" value="Ask a new question" class="btn btn-primary">Ask a new question</button>
          </form>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+var socket = io();
+    
+socket.on('newQuestion', function(data) {
+// Add question
+$(".questions" ).append(data.message);
+});
+socket.emit('discussion',window.location.pathname.split('/')[2]);
+// Simple submit of the message
+$('.form-question').submit(function() {
+  console.log('this', this);
+  //alert($(".textarea-q").val());
+  //console.log('question', $('.textarea-p').value());
+  // Add message to message ul
+  //$("#p-answer" ).append("<li>" + $('.textarea-q').val() + "</li>" );
+  //var questval = $(this).closest(".form-question").find("input[name='question']").val();
+  var questval = $(".questions" ).append("<h3 class='question''>" + $('.textarea-q').val() + "</h3>" );
+  //console.log('value new question', anwserval);
+  // Send message to the server
+  socket.emit('newQuestion', {answer: questval, discussionId: window.location.pathname.split('/')[2]});
+  // Make input empty
+  //$('.textarea-q').val('');
+  // Disable default behaviour of submit
+  return false;
+}); 
+    
+    
+    
+// Listen for new messages
+socket.on('newAnswer', function(data) {
+// Add answer
+$("#p-answer" ).append(data.message);
+});
+
+// Listen for room
+// This is normally done on the client but this gives at least an idea how it works
+// Normally you click on a question
+// Send to the server you connected to (e.g.) room1
+// The server disconnects socket from the old room
+// The server connects you to the new room
+socket.emit('discussion',window.location.pathname.split('/')[2]);
+      
+    
+// Simple submit of the message
+$('.form-answer').submit(function() {
+    console.log('this', this);
+	// Add message to message ul
+	//$("#p-answer" ).append("<li>" + $('.textarea-q').val() + "</li>" );
+    var answerval = $(this).closest(".form-answer").find("input[name='answer']").val();
+    var questionId = $(this).closest(".form-answer").find("input[name='questionId']").val();
+    $("#answerlist" ).append("<li>" + answerval + "</li>" );
+    console.log('value new answer', anwserval);
+	// Send message to the server
+	socket.emit('newAnswer', {answer: answerval, questionId: questionId, discussionId: window.location.pathname.split('/')[2]});
+	// Make input empty
+	//$('.textarea-q').val('');
+	// Disable default behaviour of submit
+	return false;
+});
+    
+
+</script>
+
+
+
+ 
