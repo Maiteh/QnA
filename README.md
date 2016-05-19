@@ -13,8 +13,12 @@ download the developement branch and install the modules with
 
 Then you can run the app with
 > node app.js
-of 
+
+or
 > nodemon
+
+When in developement run with
+> gulp
 
 The app will be running on *localhost:3000*.
 
@@ -24,15 +28,13 @@ When surfing to localhost:3000 you'll get a login page with the option to create
 When the account is created you will be redirected to the login page again and you van login now.
 When logged in you'll see a page that list all the discussions. In the head navigation you'll see an option to create a new one or log out.
 When clicking on a discussion you can read the full discussion topic and all te posted questions and answers or ask/answer a new one.
+You can share a topic on Facebook (Doesn't work on localhost)
+You can see how many users are active in a topic.
+You get yout location on the first page.
 
 >**Todo**
 
-> - Show user who posted topic
-> - show user who posted question
-> - show user who posted awnser
 > - make questions and awsners realtime
-> - save the location of the post 
-> - view who is active in the discussion. 
 > - view which discussions are nearby
 > - make the creator of the discussion the moderator
 > - give moderator option to delete or edit their posts.
