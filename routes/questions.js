@@ -25,6 +25,8 @@ var createQuestion = function(discussionId, question, callback) {
 		});
 };
 
+module.exports.createQuestion = createQuestion;
+
 // POST for answers
 router.post('/:id', urlencodedParser, function (req, res) {
 	var question = {

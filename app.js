@@ -53,11 +53,10 @@ app.use(session({
             maxAge: 1000 * 60 * 60 * 24 * 7
     },
     name: 'QnA',
-		secret: 'QnA',
-		store: new mongoStore({
-			url: "mongodb://127.0.0.1:27017",
-			collection:"qna"
-		})
+    store: new mongoStore({
+	  url: "mongodb://127.0.0.1:27017",
+      collection:"qna"
+    })
 }));
 
 // Passport init
@@ -96,7 +95,7 @@ app.use(function (req, res, next) {
 });
 
 var routes      = require('./routes/index');
-var users       =  require('./routes/users');
+var users       = require('./routes/users');
 var discussions = require('./routes/discussions');
 var questions   = require('./routes/questions');
 var answers     = require('./routes/answers');
@@ -107,6 +106,42 @@ app.use('/discussions', discussions);
 app.use('/questions', questions);
 app.use('/answers', answers);
 
+// Listen for connections
+io.on('connection', function(socket) {
+	console.log('User with socket id ' + socket.id + ' connected.');
+
+	// Tell the socket which room he belongs to
+	socket.on('discussion', function(discussionId){
+        //console.log('discussionId',discussionId);
+        socket.join(discussionId);
+    });
+
+    // Listen for new Questions
+	socket.on('newQuestion', function(question) {
+		var thisDiscussion = Object.keys(socket.rooms)[1];
+		// Save the message in the database
+		questions.createQuestion(question.discussionId, question.question, function(qst) {
+          socket.broadcast.to(thisDiscussion).emit('newQuestion', qst);
+		});
+	});
+
+	// Listen for new Answers
+	socket.on('newAnswer', function(answer) {
+		var thisDiscussion = Object.keys(socket.rooms)[1];
+		// Save the message in the database
+		answers.createAnswer(answer.discussionId, answer.questionId, answer.answer, function(ans) {
+			// Broadcast the message to everyone
+			// Broadcast = Emit mesage to everyone except the person who sends the message
+			// to(currentRoom) only. So other rooms do not get the message
+			socket.emit('newAnswer', ans);
+		});
+	});
+
+	socket.on('disconnect', function() {
+		// Log when a user disconnects
+		console.log('User with socket id ' + socket.id + ' disconnected.');
+	});
+});
 
 http.listen(3000, function () {
     console.log('listening on port 3000');

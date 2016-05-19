@@ -1,8 +1,9 @@
 var mongoose         = require('mongoose');
 var Schema           = mongoose.Schema;
 var discussionSchema = new Schema({
-    title:   String,
-    message: String,
+    title:    String,
+    message:  String,
+    location: String,
     userId:  {
         type: String,
         ref: 'User'

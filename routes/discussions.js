@@ -27,7 +27,7 @@ router.get('/:id', isAuthenticated, function (req, res) {
 			console.log('err', err);
 			console.log('doc', doc);
 			if(doc) {
-				res.render('discussion', {"title": doc.title, "message": doc.message, "userId": doc.userId, "data": doc.questions, discussionId: doc._id.toString()});
+				res.render('discussion', {"title": doc.title, "message": doc.message, "location": doc.location, "userId": doc.userId, "data": doc.questions, discussionId: doc._id.toString()});
 			} else {
 				res.render("404");
 			}
@@ -56,7 +56,7 @@ var createDiscussion = function(discussion, callback) {
 
 // POST /login gets urlencoded bodies
 router.post('/create', urlencodedParser, function (req, res) {
-	var discussion = {title: req.body.title, message: req.body.message, userId: req.user._id.toString()};
+	var discussion = {title: req.body.title, message: req.body.message, location: req.body.location, userId: req.user._id.toString()};
 
 	createDiscussion(discussion, function(err, data) {
 		if (err) {

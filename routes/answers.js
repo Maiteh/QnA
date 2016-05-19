@@ -24,6 +24,8 @@ var createAnswer = function(discussionId, questionId, answer, callback) {
 		});
 };
 
+module.exports.createAnswer = createAnswer;
+
 // POST for answers
 router.post('/:id', urlencodedParser, function (req, res) {
 	var answer = {
